@@ -1,0 +1,25 @@
+// @font-face{
+//   font-family: GenJyuuGothic-P-Bold;
+//   src: url("@/assets/fonts/GenJyuuGothic-P-Bold.ttf");
+// }
+// @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Noto+Sans+TC:wght@500&family=Noto+Serif+TC:wght@900&family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Roboto&display=swap');
+
+// .GenJyuuGothic {
+//   font-family: 'GenJyuuGothic-P-Bold';
+// }
+// .EB-Garamond {
+//   font-family: 'EB Garamond', serif;
+// }
+.Roboto{
+  font-family: 'Roboto', sans-serif;
+}
+// .Noto-Serif-TC {
+//   font-family: 'Noto Serif TC', serif;
+// }
+.Noto-Sans-TC {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.test {
+  outline: solid 3px red;
+}

@@ -1,0 +1,17 @@
+// Required
+// ../ = ~
+@import "~bootstrap/scss/functions";
+//改用自己的
+@import "variable"; 
+@import "~bootstrap/scss/mixins";
+
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+// 載入所有
+@import "~bootstrap/scss/bootstrap";
+
+@import "bg";
+@import "font";
