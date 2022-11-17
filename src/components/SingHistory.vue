@@ -2,29 +2,31 @@
   <div v-for="item in imgs" :key="item">
     <img class="show-img"
         :src = "item"
+        @click="pushImage(item)"
     />
   </div>
 </template>
 
 <script>
+import { mapState, mapActions, mapWritableState } from 'pinia'
+import pdfStore from '@/stores/pdfStore'
 export default {
   data () {
     return {
-      imgs: []
+      // imgs: []
     }
+  },
+  computed: {
+    ...mapState(pdfStore, ['imgs'])
   },
   methods: {
-    getSignHistory () {
-      const showImage = document.querySelectorAll('.show-img')
-      this.imgs = JSON.parse(localStorage.getItem('imgs'))
-      console.log(this.imgs)
-      // showImage[0].src = JSON.parse(localStorage.getItem('imgs'))[0]
-      // showImage[1].src = JSON.parse(localStorage.getItem('imgs'))[1]
-    }
-
+    ...mapActions(pdfStore, ['pushImage', 'getSignHistory'])
+  },
+  created () {
+    this.getSignHistory()
   },
   mounted () {
-    this.getSignHistory()
+
   }
 }
 </script>

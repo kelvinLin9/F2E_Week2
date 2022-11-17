@@ -4,16 +4,18 @@
       <img src="../assets/images/logo.png" alt="logo">
     </div>
     <HomePage v-if="true"/>
-    <MakeSign v-if="false"/>
-    <singHistory v-if="false"/>
-    <editPdf/>
+    <MakeSign v-if="true"/>
+    <!-- <singHistory v-if="false"/> -->
+    <!-- <editPdf v-if="true"/> -->
     <div class="homeBgs">
       <div class="bg-grassland-1"></div>
       <div class="bg-home1"></div>
       <div class="bg-home2"></div>
     </div>
   </div>
-    <!-- <canvas id="canvas" style="border: 1px solid #000"> </canvas> -->
+  <br><br><br>
+  <editPdf v-if="true"/>
+  <singHistory v-if="true"/>
 </template>
 
 <script>

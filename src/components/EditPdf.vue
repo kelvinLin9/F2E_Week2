@@ -1,6 +1,20 @@
 <template>
   <div>
-    <canvas id="canvas" style="border: 1px solid #000"> </canvas>
+    <canvas id="canvas" class="canvas"> </canvas>33
+  </div>
+  <div class="d-flex">
+    <div>
+      換頁按鈕
+    </div>
+    <div>
+      放大縮小
+    </div>
+    <div>
+      有的沒的編輯按鈕
+    </div>
+    <div>
+      完成簽署
+    </div>
   </div>
 </template>
 
@@ -26,5 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.canvas {
+  width: 793px;
+  border: 1px solid #000
+}
+.canvas1 {
+  width: 793px;
+  border: 1px solid #000
+}
 </style>

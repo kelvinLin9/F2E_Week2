@@ -18,7 +18,7 @@
     </div>
     <div class="sign-here">
       <canvas
-        id="canvas"
+        id="canvasImage"
         width="590"
         height="224"
       ></canvas>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getSign () {
-      const canvas = document.querySelector('#canvas')
+      const canvas = document.querySelector('#canvasImage')
       const ctx = canvas.getContext('2d')
       const clearBtn = document.querySelector('.clear')
 
