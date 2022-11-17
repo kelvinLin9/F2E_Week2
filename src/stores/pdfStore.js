@@ -2,10 +2,13 @@ import { defineStore } from 'pinia'
 
 export default defineStore('pdfStore', {
   state: () => ({
-    imgs: []
+    imgs: [],
+    event: {}
   }),
   actions: {
-    getPdf (e) {
+    getPdf (e, item) {
+      this.event = e
+      console.log(this.event)
       const Base64Prefix = 'data:application/pdf;base64,'
       // const add = document.querySelector('.add')
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js'
@@ -79,7 +82,7 @@ export default defineStore('pdfStore', {
       go(e)
 
       // this.pushImage(this.imgs[0])
-      fabric.Image.fromURL(this.imgs[0], function (image) {
+      fabric.Image.fromURL(item, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 400
         image.scaleX = 0.5
@@ -94,18 +97,19 @@ export default defineStore('pdfStore', {
       console.log(this.imgs)
     },
     pushImage (item) {
-      console.log(item)
-      const canvas1 = new fabric.Canvas('canvas1')
-      // console.log(canvas)
-      fabric.Image.fromURL(item, function (image) {
-	    // 設定簽名出現的位置及大小，後續可調整
-	      image.top = 400
-		    image.scaleX = 0.5
-        image.scaleY = 0.5
-        console.log(image)
-        canvas1.add(image)
-        console.log(canvas1)
-      })
+      this.getPdf(this.event, item)
+      // console.log(item)
+      // const canvas1 = new fabric.Canvas('canvas1')
+      // // console.log(canvas)
+      // fabric.Image.fromURL(item, function (image) {
+	    // // 設定簽名出現的位置及大小，後續可調整
+	    //   image.top = 400
+		  //   image.scaleX = 0.5
+      //   image.scaleY = 0.5
+      //   console.log(image)
+      //   canvas1.add(image)
+      //   console.log(canvas1)
+      // })
     }
   }
 })
