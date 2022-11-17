@@ -12,14 +12,15 @@
     <div>
       有的沒的編輯按鈕
     </div>
-    <div>
+    <div class="download btn"
+        @click="downloadPDF()">
       完成簽署
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapWritableState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
 export default {
   data () {
@@ -28,9 +29,7 @@ export default {
     }
   },
   methods: {
-    getSignHistory () {
-
-    }
+    ...mapActions(pdfStore, ['downloadPDF'])
 
   },
   mounted () {

@@ -69,7 +69,7 @@ export default defineStore('pdfStore', {
       // 此處 canvas 套用 fabric.js
       const canvas = new fabric.Canvas('canvas')
 
-      async function go (e) {
+      async function render (e) {
         canvas.requestRenderAll()
         const pdfData = await printPDF(e.target.files[0])
         const pdfImage = await pdfToImage(pdfData)
@@ -78,19 +78,19 @@ export default defineStore('pdfStore', {
         canvas.setHeight(pdfImage.height / window.devicePixelRatio)
         // 將 PDF 畫面設定為背景
         canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
+        if (item) {
+          console.log(46467987)
+          const canvas = new fabric.Canvas('canvas')
+          fabric.Image.fromURL(item, function (image) {
+            // 設定簽名出現的位置及大小，後續可調整
+            image.top = 400
+            image.scaleX = 0.5
+            image.scaleY = 0.5
+            canvas.add(image)
+          })
+        }
       }
-      go(e)
-
-      // this.pushImage(this.imgs[0])
-      fabric.Image.fromURL(item, function (image) {
-        // 設定簽名出現的位置及大小，後續可調整
-        image.top = 400
-        image.scaleX = 0.5
-        image.scaleY = 0.5
-        console.log(image)
-        canvas.add(image)
-        console.log(canvas)
-      })
+      render(e)
     },
     getSignHistory () {
       this.imgs = JSON.parse(localStorage.getItem('imgs'))
@@ -98,18 +98,18 @@ export default defineStore('pdfStore', {
     },
     pushImage (item) {
       this.getPdf(this.event, item)
-      // console.log(item)
-      // const canvas1 = new fabric.Canvas('canvas1')
-      // // console.log(canvas)
-      // fabric.Image.fromURL(item, function (image) {
-	    // // 設定簽名出現的位置及大小，後續可調整
-	    //   image.top = 400
-		  //   image.scaleX = 0.5
-      //   image.scaleY = 0.5
-      //   console.log(image)
-      //   canvas1.add(image)
-      //   console.log(canvas1)
-      // })
+    },
+    downloadPDF () {
+      // 引入套件所提供的物件
+      const pdf = new jsPDF()
+      // 將 canvas 存為圖片
+      const image = canvas.toDataURL('image/png')
+      // 設定背景在 PDF 中的位置及大小
+      const width = pdf.internal.pageSize.width
+      const height = pdf.internal.pageSize.height
+      pdf.addImage(image, 'png', 0, 0, width, height)
+      // 將檔案取名並下載
+      pdf.save('download.pdf')
     }
   }
 })
