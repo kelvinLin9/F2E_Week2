@@ -310,7 +310,7 @@ $dark:          $gray-900 !default;
 $purple:        #1C8B6A;
 $gray:          #B7B7B7;
 $orange:        #FFB800;
-
+// $white:         #ffffff;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
@@ -326,6 +326,7 @@ $theme-colors: (
   "purple":     $purple,
   "gray":       $gray,
   "orange":     $orange,
+  // "white":      $white,
 ) !default;
 // scss-docs-end theme-colors-map
 

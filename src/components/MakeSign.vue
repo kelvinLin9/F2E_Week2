@@ -1,34 +1,46 @@
 <template>
-  <div class="sign container position-relative test">
+  <div class="sign container position-relative d-flex flex-column justify-content-center align-items-center">
     <div class="">
-      切換
+      <button class="btn btn-primary py-2 my-3 text-white">
+        手寫簽名
+        </button>
+      <button class="btn py-2 my-3 text-primary bg-white">
+        匯入簽名檔
+        </button>
     </div>
-    <div class="">
-      選色
+    <div class="d-flex">
+      <div class="choose-color black mx-2 my-4"
+          @click="chooseColor('black')"></div>
+      <div class="choose-color blue mx-2 my-4"
+          @click="chooseColor('blue')"></div>
+      <div class="choose-color red mx-2 my-4"
+          @click="chooseColor('red')"></div>
     </div>
-    <div class="">
+    <div class="sign-here">
       <canvas
         id="canvas"
-        width="500"
-        height="300"
-        style="border: 1px solid #000"
+        width="590"
+        height="224"
       ></canvas>
-
-      <img class="show-img" width="250" height="150" style="border: 1px solid" />
-      <div class="btn-group">
-        <button class="clear">Clear</button>
-        <button class="save">Save</button>
-      </div>
     </div>
-    <div class="">
-      按鈕
+    <div class="btn-group">
+      <button class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">清除</button>
+      <button class="save btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white">建立簽名</button>
     </div>
   </div>
-
+  <!-- <div>
+    <img class="show-img" width="250" height="150" style="border: 1px solid" />
+    <img class="show-img" width="250" height="150" style="border: 1px solid" />
+  </div> -->
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      color: 'red'
+    }
+  },
   methods: {
     getSign () {
       const canvas = document.querySelector('#canvas')
@@ -38,7 +50,7 @@ export default {
       // 設定線條的相關數值
       ctx.lineWidth = 4
       ctx.lineCap = 'round'
-
+      ctx.strokeStyle = this.color
       // 設置狀態來確認滑鼠 / 手指是否按下或在畫布範圍中
       let isPainting = false
 
@@ -105,23 +117,32 @@ export default {
 
       // -----------------------
 
-      const showImage = document.querySelector('.show-img')
+      const showImage = document.querySelectorAll('.show-img')
       const saveBtn = document.querySelector('.save')
-      function saveImage () {
-        // 圖片儲存的類型選擇 png ，並將值放入 img 的 src
-        const newImg = canvas.toDataURL('image/png')
-        showImage.src = newImg
-      }
+      // function saveImage () {
+      //   // 圖片儲存的類型選擇 png ，並將值放入 img 的 src
+      //   const newImg = canvas.toDataURL('image/png')
 
+      //   showImage.src = newImg
+      // }
       saveBtn.addEventListener('click', saveImage)
 
       // -----------------------
-
+      const Imgs = []
       function saveImage () {
         const newImg = canvas.toDataURL('image/png')
-        showImage.src = newImg
+        Imgs.push(canvas.toDataURL('image/png'))
+        console.log('Imgs', Imgs)
+        console.log('newImg', newImg)
         localStorage.setItem('img', newImg)
+        localStorage.setItem('imgs', JSON.stringify(Imgs))
+        console.log(localStorage.getItem('img'))
+        console.log(JSON.parse(localStorage.getItem('imgs')))
       }
+    },
+    chooseColor (color) {
+      this.color = color
+      this.getSign()
     }
   },
   mounted () {
@@ -131,5 +152,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.sign {
+  background-color: #f0f0f0;
+}
+.sign-here {
+  background: #FFFFFF;
+  border-radius: 26px;
+}
+.choose-color {
+  width: 35px;
+  height: 35px;
+}
+.black {
+  background: #000;
+  border-radius: 18px;
+}
+.blue {
+  background: #0014C7;
+  border-radius: 18px;
+}
+.red {
+  background: #CA0000;
+  border-radius: 18px;
+}
 </style>
