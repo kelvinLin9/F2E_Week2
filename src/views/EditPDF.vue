@@ -1,8 +1,10 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
+    <!-- PDF -->
     <div class="">
       <canvas id="canvas" class="canvas overflow-auto test"></canvas>
     </div>
+    <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white test">
       <div class="page d-flex justify-content-center align-items-center">
         <img src="../assets/images/prev.png" alt="上一頁"
@@ -109,7 +111,7 @@ export default {
     ...mapActions(pdfStore, ['downloadPDF', 'getPdf', 'prevPage', 'nextPage'])
   },
   mounted () {
-    this.getPdf(this.event)
+    // this.getPdf(this.event)
   }
 }
 </script>

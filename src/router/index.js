@@ -9,7 +9,19 @@ const routes = [
   {
     path: '/UserSign',
     name: 'UserSign',
-    component: () => import('../views/UserSign.vue')
+    component: () => import('../views/UserSign.vue'),
+    children: [
+      {
+        path: 'MakeSign',
+        name: 'MakeSign',
+        component: () => import('../views/MakeSign.vue')
+      },
+      {
+        path: 'EditPDF',
+        name: 'EditPDF',
+        component: () => import('../views/EditPDF.vue')
+      }
+    ]
   }
 ]
 

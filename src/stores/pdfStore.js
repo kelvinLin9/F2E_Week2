@@ -33,7 +33,7 @@ export default defineStore('pdfStore', {
         const data = atob(pdfData.substring(Base64Prefix.length))
         // 利用解碼的檔案，載入 PDF 檔及第一頁
         const pdfDoc = await pdfjsLib.getDocument({ data }).promise
-        console.log(88996699, typeof pdfDoc.numPages)
+        console.log(88996699, pdfDoc.numPages)
         // console.log(8899669999999, this.pageNum)
         // this.totalPage = pdfDoc.numPages
         const pdfPage = await pdfDoc.getPage(pageNum)
@@ -90,7 +90,9 @@ export default defineStore('pdfStore', {
         }
       }
       renderPage(e)
-      this.gotoSign()
+      if (!item) {
+        this.gotoSign()
+      }
     },
     prevPage () {
       console.log(123)
@@ -99,7 +101,7 @@ export default defineStore('pdfStore', {
       }
       this.pageNum--
       console.log(this.pageNum)
-      this.getPdf(this.event, undefined, this.pageNum)
+      this.getPdf(this.event, null, this.pageNum)
     },
     nextPage () {
       console.log(456)
@@ -109,7 +111,7 @@ export default defineStore('pdfStore', {
       }
       this.pageNum++
       console.log(this.pageNum)
-      this.getPdf(this.event, undefined, this.pageNum)
+      this.getPdf(this.event, null, this.pageNum)
     },
     pushImageToPDF (e, item) {
       console.log(e)
@@ -128,7 +130,7 @@ export default defineStore('pdfStore', {
       pdf.save('download.pdf')
     },
     gotoSign () {
-      router.push('/UserSign')
+      router.push('/UserSign/MakeSign')
     }
   }
 })

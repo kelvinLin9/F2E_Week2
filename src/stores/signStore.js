@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import router from '../router'
 
 export default defineStore('signStore', {
   state: () => ({
@@ -89,11 +90,15 @@ export default defineStore('signStore', {
       this.signs.push(canvas.toDataURL('image/png'))
       localStorage.setItem('signs', JSON.stringify(this.signs))
       this.reset()
+      this.gotoPDF()
     },
     reset () {
       const canvas = document.querySelector('#canvasImage')
       const ctx = canvas.getContext('2d')
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+    },
+    gotoPDF () {
+      router.push('/UserSign/EditPDF')
     }
   }
 })

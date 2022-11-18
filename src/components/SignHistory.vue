@@ -32,8 +32,8 @@ export default {
 
 <style lang="scss" scoped>
 .show-img {
-  width: 250px;
-  height: 150px;
+  width: 100px;
+  height: 60px;
   border: 1px solid ;
 }
 </style>
