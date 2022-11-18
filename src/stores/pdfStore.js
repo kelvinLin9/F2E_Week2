@@ -4,14 +4,16 @@ import router from '../router'
 export default defineStore('pdfStore', {
   state: () => ({
     imgs: [],
-    event: {}
+    event: {},
+    pageNum: 1,
+    totalPage: 10
   }),
   actions: {
-    getPdf (e, item) {
+    getPdf (e, item, pageNum = 1) {
+      console.log(pageNum)
       this.event = e
       console.log(this.event)
       const Base64Prefix = 'data:application/pdf;base64,'
-      // const add = document.querySelector('.add')
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js'
 
       // 使用原生 FileReader 轉檔
@@ -26,18 +28,17 @@ export default defineStore('pdfStore', {
 
       async function printPDF (pdfData) {
         // 將檔案處理成 base64
-        // console.log(pdfData)
         pdfData = await readBlob(pdfData)
-        // console.log(pdfData)
         // 將 base64 中的前綴刪去，並進行解碼
         const data = atob(pdfData.substring(Base64Prefix.length))
-        // console.log(data)
         // 利用解碼的檔案，載入 PDF 檔及第一頁
         const pdfDoc = await pdfjsLib.getDocument({ data }).promise
-        // console.log(pdfDoc)
-        const pdfPage = await pdfDoc.getPage(1)
-        // console.log(pdfPage)
+        console.log(88996699, typeof pdfDoc.numPages)
+        // console.log(8899669999999, this.pageNum)
+        // this.totalPage = pdfDoc.numPages
+        const pdfPage = await pdfDoc.getPage(pageNum)
         // 設定尺寸及產生 canvas
+        console.log(788, window.devicePixelRatio)
         const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio })
         const canvas = document.createElement('canvas')
         const context = canvas.getContext('2d')
@@ -57,7 +58,6 @@ export default defineStore('pdfStore', {
 
       async function pdfToImage (pdfData) {
         // 設定 PDF 轉為圖片時的比例
-        // console.log(window.devicePixelRatio)
         const scale = 1 / window.devicePixelRatio
         // 回傳圖片
         return new fabric.Image(pdfData, {
@@ -69,7 +69,7 @@ export default defineStore('pdfStore', {
 
       // 此處 canvas 套用 fabric.js
       const canvas = new fabric.Canvas('canvas')
-      async function render (e) {
+      async function renderPage (e) {
         canvas.requestRenderAll()
         const pdfData = await printPDF(e.target.files[0])
         const pdfImage = await pdfToImage(pdfData)
@@ -89,8 +89,27 @@ export default defineStore('pdfStore', {
           })
         }
       }
-      render(e)
+      renderPage(e)
       this.gotoSign()
+    },
+    prevPage () {
+      console.log(123)
+      if (this.pageNum <= 1) {
+        return
+      }
+      this.pageNum--
+      console.log(this.pageNum)
+      this.getPdf(this.event, undefined, this.pageNum)
+    },
+    nextPage () {
+      console.log(456)
+      console.log(this.totalPage)
+      if (this.pageNum >= this.totalPage) {
+        return
+      }
+      this.pageNum++
+      console.log(this.pageNum)
+      this.getPdf(this.event, undefined, this.pageNum)
     },
     pushImageToPDF (e, item) {
       console.log(e)

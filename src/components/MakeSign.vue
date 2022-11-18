@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { mapActions } from 'pinia'
 import signStore from '@/stores/signStore'
 export default {
   data () {

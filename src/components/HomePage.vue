@@ -41,11 +41,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { mapActions } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
+import signStore from '@/stores/signStore'
 export default {
   methods: {
-    ...mapActions(pdfStore, ['getPdf'])
+    ...mapActions(pdfStore, ['getPdf']),
+    ...mapActions(signStore, ['getSign'])
+  },
+  mounted () {
+    // this.getSign()
   }
 }
 </script>

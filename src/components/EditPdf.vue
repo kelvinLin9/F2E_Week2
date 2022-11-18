@@ -5,13 +5,21 @@
     </div>
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white test">
       <div class="page d-flex justify-content-center align-items-center">
-        <img src="../assets/images/prev.png" alt="">
-        <input type="number" class="w-50">
-        <img src="../assets/images/next.png" alt="">
+        <img src="../assets/images/prev.png" alt="上一頁"
+          @click="prevPage()">
+        <div class="w-25 text-center">
+          {{pageNum}}
+        </div>
+        <!-- <input type="text" class="w-25 mx-3"
+        v-model.number="pageNum"
+        > -->
+        <img src="../assets/images/next.png" alt="下一頁"
+            @click="nextPage()"
+        >
       </div>
       <div class="scale d-flex justify-content-center align-items-center">
         <img src="../assets/images/zoom-in.png" alt="">
-        <input type="number" class="w-50">
+        <input type="number" class="w-25 mx-3">
         <img src="../assets/images/zoom-out.png" alt="">
       </div>
       <div class="other d-flex justify-content-center align-items-center">
@@ -85,7 +93,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { mapState, mapActions, mapWritableState } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
 export default {
   data () {
@@ -94,10 +102,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['event'])
+    ...mapState(pdfStore, ['event']),
+    ...mapWritableState(pdfStore, ['pageNum'])
   },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF', 'getPdf'])
+    ...mapActions(pdfStore, ['downloadPDF', 'getPdf', 'prevPage', 'nextPage'])
   },
   mounted () {
     this.getPdf(this.event)
@@ -107,10 +116,9 @@ export default {
 
 <style lang="scss" scoped>
 .canvas{
-  position: absolute;
-  max-width: 1280px;
-  // max-height: 620px;
-  top: 50%;
+  // position: absolute;
+  // max-width: 1280px;
+  // top: 50%;
 }
 .edit-pdf {
   width: 100%;
