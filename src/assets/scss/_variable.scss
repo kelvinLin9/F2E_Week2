@@ -315,6 +315,7 @@ $orange:        #FFB800;
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
+  "gray":       $gray,
   "primary":    $primary,
   "secondary":  $secondary,
   "success":    $success,
@@ -324,7 +325,6 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark,
   "purple":     $purple,
-  "gray":       $gray,
   "orange":     $orange,
   // "white":      $white,
 ) !default;

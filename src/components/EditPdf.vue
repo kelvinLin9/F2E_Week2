@@ -1,20 +1,85 @@
 <template>
-  <div>
-    <canvas id="canvas" class="canvas"> </canvas>33
-  </div>
-  <div class="d-flex">
-    <div>
-      換頁按鈕
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="">
+      <canvas id="canvas" class="canvas overflow-auto test"></canvas>
     </div>
-    <div>
-      放大縮小
-    </div>
-    <div>
-      有的沒的編輯按鈕
-    </div>
-    <div class="download btn"
-        @click="downloadPDF()">
-      完成簽署
+    <div class="edit-pdf d-flex justify-content-center align-items-center bg-white test">
+      <div class="page d-flex justify-content-center align-items-center">
+        <img src="../assets/images/prev.png" alt="">
+        <input type="number" class="w-50">
+        <img src="../assets/images/next.png" alt="">
+      </div>
+      <div class="scale d-flex justify-content-center align-items-center">
+        <img src="../assets/images/zoom-in.png" alt="">
+        <input type="number" class="w-50">
+        <img src="../assets/images/zoom-out.png" alt="">
+      </div>
+      <div class="other d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <button class="edit-btn"
+                  @click="btn = 'sign'"
+          >
+            <img src="../assets/images/簽名1.png" alt="簽名1"
+                :class="{'d-none':btn === 'sign'}"
+            >
+            <img src="../assets/images/簽名2.png" alt="簽名2"
+                :class="{'d-none':btn !== 'sign'}"
+            >
+          </button>
+          <p class="fs-12 text-gray"
+            :class="{'text-primary':btn === 'sign'}"
+          >簽名</p>
+        </div>
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <button class="edit-btn"
+                  @click="btn = 'check'"
+          >
+            <img src="../assets/images/勾選1.png" alt="勾選1"
+                :class="{'d-none':btn === 'check'}"
+            >
+            <img src="../assets/images/勾選2.png" alt="勾選2"
+                :class="{'d-none':btn !== 'check'}"
+            >
+          </button>
+          <p class="fs-12 text-gray"
+            :class="{'text-primary':btn === 'check'}"
+          >勾選</p>
+        </div>
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <button class="edit-btn"
+                  @click="btn = 'date'"
+          >
+            <img src="../assets/images/日期1.png" alt="日期1"
+                :class="{'d-none':btn === 'date'}"
+            >
+            <img src="../assets/images/日期2.png" alt="日期2"
+                :class="{'d-none':btn !== 'date'}"
+            >
+          </button>
+          <p class="fs-12 text-gray"
+            :class="{'text-primary':btn === 'date'}"
+          >日期</p>
+        </div>
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <button class="edit-btn"
+                  @click="btn = 'word'"
+          >
+            <img src="../assets/images/文字1.png" alt="文字1"
+                :class="{'d-none':btn === 'word'}"
+            >
+            <img src="../assets/images/文字2.png" alt="文字2"
+                :class="{'d-none':btn !== 'word'}"
+            >
+          </button>
+          <p class="fs-12 text-gray"
+            :class="{'text-primary':btn === 'word'}"
+          >插入文字</p>
+        </div>
+      </div>
+      <div class="download btn d-flex justify-content-center align-items-center fs-18 text-white"
+          @click="downloadPDF()">
+        完成簽署
+      </div>
     </div>
   </div>
 </template>
@@ -25,26 +90,64 @@ import pdfStore from '@/stores/pdfStore'
 export default {
   data () {
     return {
-
+      btn: ''
     }
   },
+  computed: {
+    ...mapState(pdfStore, ['event'])
+  },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF'])
-
+    ...mapActions(pdfStore, ['downloadPDF', 'getPdf'])
   },
   mounted () {
-
+    this.getPdf(this.event)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.canvas {
-  width: 793px;
-  border: 1px solid #000
+.canvas{
+  position: absolute;
+  max-width: 1280px;
+  // max-height: 620px;
+  top: 50%;
 }
-.canvas1 {
-  width: 793px;
-  border: 1px solid #000
+.edit-pdf {
+  width: 100%;
+  height: 92px;
+  position:absolute;
+  bottom: 0px;
+  z-index: 10;
+}
+.page {
+  width: 199px;
+  height: 58px;
+}
+.scale {
+  width: 199px;
+  height: 58px;
+}
+.other {
+  width: 343px;
+  height: 72px;
+}
+.download {
+  width: 183px;
+  height: 56px;
+  background: linear-gradient(180deg, #35A483 0%, #077854 100%);
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11);
+  border-radius: 16px;
+  margin-left: 50px;
+}
+.edit-btn {
+  border: #f7f8f8;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9px;
+  margin: 20px 12px 2px 12px;
 }
 </style>

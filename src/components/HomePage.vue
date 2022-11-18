@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapWritableState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
 export default {
   methods: {

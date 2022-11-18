@@ -4,32 +4,20 @@
       <img src="../assets/images/logo.png" alt="logo">
     </div>
     <HomePage v-if="true"/>
-    <MakeSign v-if="true"/>
-    <!-- <singHistory v-if="false"/> -->
-    <!-- <editPdf v-if="true"/> -->
     <div class="homeBgs">
       <div class="bg-grassland-1"></div>
       <div class="bg-home1"></div>
       <div class="bg-home2"></div>
     </div>
   </div>
-  <br><br><br>
-  <editPdf v-if="true"/>
-  <singHistory v-if="true"/>
 </template>
 
 <script>
 import HomePage from '@/components/HomePage.vue'
-import MakeSign from '@/components/MakeSign.vue'
-import SingHistory from '@/components/SingHistory.vue'
-import EditPdf from '@/components/EditPdf.vue'
-// import { mapState, mapActions } from 'pinia'
+
 export default {
   components: {
-    HomePage,
-    MakeSign,
-    SingHistory,
-    EditPdf
+    HomePage
   }
 }
 </script>

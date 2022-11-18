@@ -1,15 +1,16 @@
 <template>
-  <div v-for="item in imgs" :key="item">
+  <div v-for="item in signs" :key="item">
     <img class="show-img"
         :src = "item"
-        @click="pushImage(item)"
+        @click="pushImageToPDF(event, item)"
     />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapWritableState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
+import signStore from '@/stores/signStore'
 export default {
   data () {
     return {
@@ -17,13 +18,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['imgs'])
+    ...mapState(signStore, ['signs']),
+    ...mapState(pdfStore, ['event'])
   },
   methods: {
-    ...mapActions(pdfStore, ['pushImage', 'getSignHistory'])
-  },
-  created () {
-    this.getSignHistory()
+    ...mapActions(pdfStore, ['pushImageToPDF'])
   },
   mounted () {
 

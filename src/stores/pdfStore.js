@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import router from '../router'
 
 export default defineStore('pdfStore', {
   state: () => ({
@@ -68,7 +69,6 @@ export default defineStore('pdfStore', {
 
       // 此處 canvas 套用 fabric.js
       const canvas = new fabric.Canvas('canvas')
-
       async function render (e) {
         canvas.requestRenderAll()
         const pdfData = await printPDF(e.target.files[0])
@@ -79,7 +79,6 @@ export default defineStore('pdfStore', {
         // 將 PDF 畫面設定為背景
         canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
         if (item) {
-          console.log(46467987)
           const canvas = new fabric.Canvas('canvas')
           fabric.Image.fromURL(item, function (image) {
             // 設定簽名出現的位置及大小，後續可調整
@@ -91,13 +90,11 @@ export default defineStore('pdfStore', {
         }
       }
       render(e)
+      this.gotoSign()
     },
-    getSignHistory () {
-      this.imgs = JSON.parse(localStorage.getItem('imgs'))
-      console.log(this.imgs)
-    },
-    pushImage (item) {
-      this.getPdf(this.event, item)
+    pushImageToPDF (e, item) {
+      console.log(e)
+      this.getPdf(e, item)
     },
     downloadPDF () {
       // 引入套件所提供的物件
@@ -110,6 +107,9 @@ export default defineStore('pdfStore', {
       pdf.addImage(image, 'png', 0, 0, width, height)
       // 將檔案取名並下載
       pdf.save('download.pdf')
+    },
+    gotoSign () {
+      router.push('/UserSign')
     }
   }
 })
