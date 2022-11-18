@@ -92,6 +92,12 @@ export default defineStore('signStore', {
       this.reset()
       this.gotoPDF()
     },
+    removeImage (item) {
+      console.log(item)
+      this.signs.splice(this.signs.indexOf(item), 1)
+      localStorage.setItem('signs', JSON.stringify(this.signs))
+      // this.getSign()
+    },
     reset () {
       const canvas = document.querySelector('#canvasImage')
       const ctx = canvas.getContext('2d')

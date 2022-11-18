@@ -4,6 +4,9 @@
         :src = "item"
         @click="pushImageToPDF(event, item)"
     />
+    <div @click="removeImage(item)">
+      X
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,8 @@ export default {
     ...mapState(pdfStore, ['event'])
   },
   methods: {
-    ...mapActions(pdfStore, ['pushImageToPDF'])
+    ...mapActions(pdfStore, ['pushImageToPDF', 'removeImage']),
+    ...mapActions(signStore, ['removeImage'])
   },
   mounted () {
 
