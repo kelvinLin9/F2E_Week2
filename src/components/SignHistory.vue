@@ -2,7 +2,7 @@
   <div v-for="item in signs" :key="item">
     <img class="show-img"
         :src = "item"
-        @click="pushImageToPDF(event, item)"
+        @click="analyzePDF(item)"
     />
     <div @click="removeImage(item)">
       X
@@ -17,19 +17,14 @@ import signStore from '@/stores/signStore'
 export default {
   data () {
     return {
-      // imgs: []
     }
   },
   computed: {
-    ...mapState(signStore, ['signs']),
-    ...mapState(pdfStore, ['event'])
+    ...mapState(signStore, ['signs'])
   },
   methods: {
-    ...mapActions(pdfStore, ['pushImageToPDF', 'removeImage']),
+    ...mapActions(pdfStore, ['analyzePDF', 'removeImage']),
     ...mapActions(signStore, ['removeImage'])
-  },
-  mounted () {
-
   }
 }
 </script>

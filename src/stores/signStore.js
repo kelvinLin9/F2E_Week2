@@ -8,7 +8,6 @@ export default defineStore('signStore', {
   actions: {
     getSign () {
       this.signs = JSON.parse(localStorage.getItem('signs')) || []
-      console.log('signs', this.signs)
       const canvas = document.querySelector('#canvasImage')
       const ctx = canvas.getContext('2d')
       const clearBtn = document.querySelector('.clear')
@@ -90,7 +89,7 @@ export default defineStore('signStore', {
       this.signs.push(canvas.toDataURL('image/png'))
       localStorage.setItem('signs', JSON.stringify(this.signs))
       this.reset()
-      this.gotoPDF()
+      this.gotoEditPDF()
     },
     removeImage (item) {
       console.log(item)
@@ -103,7 +102,7 @@ export default defineStore('signStore', {
       const ctx = canvas.getContext('2d')
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     },
-    gotoPDF () {
+    gotoEditPDF () {
       router.push('/UserSign/EditPDF')
     }
   }

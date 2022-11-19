@@ -21,7 +21,7 @@
             <input type="file"
               accept="application/pdf"
               placeholder="選擇PDF檔案"
-              @change="getPdf($event)"
+              @change="inputPDF($event)"
               />
           </div>
           <p class="fs-16 my-0">或拖曳檔案到此處</p>
@@ -46,7 +46,7 @@ import pdfStore from '@/stores/pdfStore'
 import signStore from '@/stores/signStore'
 export default {
   methods: {
-    ...mapActions(pdfStore, ['getPdf']),
+    ...mapActions(pdfStore, ['inputPDF']),
     ...mapActions(signStore, ['getSign'])
   },
   mounted () {

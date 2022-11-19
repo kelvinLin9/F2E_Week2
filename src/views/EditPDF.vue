@@ -10,7 +10,7 @@
         <img src="../assets/images/prev.png" alt="上一頁"
           @click="prevPage()">
         <div class="w-25 text-center">
-          {{pageNum}}
+          {{pageNum}} / {{totalPage}}
         </div>
         <!-- <input type="text" class="w-25 mx-3"
         v-model.number="pageNum"
@@ -104,14 +104,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['event']),
+    ...mapState(pdfStore, ['event', 'totalPage']),
     ...mapWritableState(pdfStore, ['pageNum'])
   },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF', 'getPdf', 'prevPage', 'nextPage'])
+    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage'])
   },
   mounted () {
-    // this.getPdf(this.event)
+    this.analyzePDF()
   }
 }
 </script>
