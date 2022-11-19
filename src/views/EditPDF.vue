@@ -2,7 +2,7 @@
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
     <div class="">
-      <canvas id="canvas" class="canvas overflow-auto test"></canvas>
+      <canvas id="canvas" class="canvas test"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white test">
@@ -20,9 +20,9 @@
         >
       </div>
       <div class="scale d-flex justify-content-center align-items-center">
-        <img src="../assets/images/zoom-in.png" alt="">
-        <input type="number" class="w-25 mx-3">
         <img src="../assets/images/zoom-out.png" alt="">
+        <input type="number" class="w-25 mx-3">
+        <img src="../assets/images/zoom-in.png" alt="">
       </div>
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
@@ -57,7 +57,7 @@
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'date'"
+                  @click="btn = 'date', addDate()"
           >
             <img src="../assets/images/日期1.png" alt="日期1"
                 :class="{'d-none':btn === 'date'}"
@@ -72,7 +72,7 @@
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'word'"
+                  @click="btn = 'word', addText()"
           >
             <img src="../assets/images/文字1.png" alt="文字1"
                 :class="{'d-none':btn === 'word'}"
@@ -104,11 +104,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['event', 'totalPage']),
+    ...mapState(pdfStore, ['event', 'totalPage', 'width']),
     ...mapWritableState(pdfStore, ['pageNum'])
   },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage'])
+    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'addImage', 'addDate', 'addText'])
   },
   mounted () {
     this.analyzePDF()

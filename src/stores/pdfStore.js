@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
 import router from '../router'
+import moment from 'moment'
 
 export default defineStore('pdfStore', {
   state: () => ({
     event: {},
     pageNum: 1,
-    totalPage: 0
+    totalPage: 0,
+    canvas: null,
+    width: 200
   }),
   actions: {
     inputPDF (e) {
@@ -31,11 +34,11 @@ export default defineStore('pdfStore', {
       const data = atob(pdfData.substring(Base64Prefix.length))
       // 利用解碼的檔案，載入 PDF 檔及第一頁
       const pdfDoc = await pdfjsLib.getDocument({ data }).promise
-      console.log('總共幾頁', pdfDoc.numPages)
       this.totalPage = pdfDoc.numPages
       const pdfPage = await pdfDoc.getPage(this.pageNum)
       // 設定尺寸及產生 canvas
       const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio })
+      console.log(viewport)
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
 
@@ -65,27 +68,26 @@ export default defineStore('pdfStore', {
       // 載入讀取畫面
       // 此處 canvas 套用 fabric.js
       const canvas = new fabric.Canvas('canvas')
+      // console.log(canvas)
       canvas.requestRenderAll()
+      // console.log('this.printPDF', this.printPDF)
       const pdfData = await this.printPDF(this.event.target.files[0])
+      // console.log('pdfData', pdfData)
       const pdfImage = await this.pdfToImage(pdfData)
       this.renderPage(canvas, pdfImage, image)
     },
     // 渲染(canvas, pdfImage)
     async renderPage (canvas, pdfImage, image) {
       // 透過比例設定 canvas 尺寸
-      canvas.setWidth(pdfImage.width / window.devicePixelRatio)
-      canvas.setHeight(pdfImage.height / window.devicePixelRatio)
+      // await canvas.setWidth(pdfImage.width / window.devicePixelRatio)
+      // await canvas.setHeight(pdfImage.height / window.devicePixelRatio)
+      // 改看看
+      console.log(pdfImage)
+      canvas.setWidth(pdfImage.width)
+      canvas.setHeight(pdfImage.height)
       // 將 PDF 畫面設定為背景
-      canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
-      if (image) {
-        fabric.Image.fromURL(image, function (image) {
-          // 設定簽名出現的位置及大小，後續可調整
-          image.top = 400
-          image.scaleX = 0.5
-          image.scaleY = 0.5
-          canvas.add(image)
-        })
-      }
+      await canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
+      this.canvas = canvas
     },
     prevPage () {
       if (this.pageNum <= 1) {
@@ -101,14 +103,34 @@ export default defineStore('pdfStore', {
       this.pageNum++
       this.analyzePDF()
     },
-    pushImageToPDF (image) {
+    addImage (image) {
+      // console.log(image)
+      console.log(this.canvas)
       fabric.Image.fromURL(image, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 400
         image.scaleX = 0.5
         image.scaleY = 0.5
-        this.analyzePDF()
+        console.log(image)
+        this.canvas.add(image)
       })
+    },
+    addDate () {
+      const today = moment().format('YYYY/MM/DD')
+      const text = new fabric.Text(today, (image) => {
+        image.top = 10
+        image.left = 10
+        image.scaleX = 0.5
+        image.scaleY = 0.5
+      })
+      this.canvas.add(text)
+    },
+    addText () {
+      const editText = new fabric.IText('雙擊我編輯', {
+        top: 400,
+        left: 400
+      })
+      this.canvas.add(editText)
     },
     downloadPDF () {
       // 引入套件所提供的物件

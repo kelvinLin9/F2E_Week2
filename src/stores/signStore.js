@@ -92,7 +92,6 @@ export default defineStore('signStore', {
       this.gotoEditPDF()
     },
     removeImage (item) {
-      console.log(item)
       this.signs.splice(this.signs.indexOf(item), 1)
       localStorage.setItem('signs', JSON.stringify(this.signs))
       // this.getSign()

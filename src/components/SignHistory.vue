@@ -2,7 +2,7 @@
   <div v-for="item in signs" :key="item">
     <img class="show-img"
         :src = "item"
-        @click="analyzePDF(item)"
+        @click="addImage(item)"
     />
     <div @click="removeImage(item)">
       X
@@ -23,7 +23,7 @@ export default {
     ...mapState(signStore, ['signs'])
   },
   methods: {
-    ...mapActions(pdfStore, ['analyzePDF', 'removeImage']),
+    ...mapActions(pdfStore, ['addImage', 'removeImage']),
     ...mapActions(signStore, ['removeImage'])
   }
 }
