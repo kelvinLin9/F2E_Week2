@@ -13,6 +13,9 @@ export default defineStore('pdfStore', {
   actions: {
     inputPDF (e) {
       this.event = e
+      if (this.event.target.files[0].size > 10000000) {
+        alert('.................')
+      }
       this.analyzePDF()
       this.gotoSign()
     },
