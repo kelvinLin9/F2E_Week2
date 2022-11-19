@@ -18,6 +18,9 @@ import HomePage from '@/components/HomePage.vue'
 export default {
   components: {
     HomePage
+  },
+  mounted () {
+    this.$swal.fire('Any fool can use a computer')
   }
 }
 </script>

@@ -8,7 +8,7 @@ export default defineStore('pdfStore', {
     pageNum: 1,
     totalPage: 0,
     canvas: null,
-    width: 200
+    width: 100
   }),
   actions: {
     inputPDF (e) {
@@ -70,19 +70,17 @@ export default defineStore('pdfStore', {
       const canvas = new fabric.Canvas('canvas')
       // console.log(canvas)
       canvas.requestRenderAll()
-      // console.log('this.printPDF', this.printPDF)
       const pdfData = await this.printPDF(this.event.target.files[0])
-      // console.log('pdfData', pdfData)
       const pdfImage = await this.pdfToImage(pdfData)
       this.renderPage(canvas, pdfImage, image)
     },
     // 渲染(canvas, pdfImage)
-    async renderPage (canvas, pdfImage, image) {
+    async renderPage (canvas, pdfImage) {
       // 透過比例設定 canvas 尺寸
-      // await canvas.setWidth(pdfImage.width / window.devicePixelRatio)
-      // await canvas.setHeight(pdfImage.height / window.devicePixelRatio)
+      // canvas.setWidth(pdfImage.width / window.devicePixelRatio)
+      // canvas.setHeight(pdfImage.height / window.devicePixelRatio)
       // 改看看
-      console.log(pdfImage)
+      // console.log(pdfImage)
       canvas.setWidth(pdfImage.width)
       canvas.setHeight(pdfImage.height)
       // 將 PDF 畫面設定為背景
@@ -103,34 +101,70 @@ export default defineStore('pdfStore', {
       this.pageNum++
       this.analyzePDF()
     },
+    zoomOut () {
+      if (this.width > 50) {
+        this.width -= 10
+      }
+    },
+    zoomIn () {
+      if (this.width < 150) {
+        this.width += 10
+      }
+    },
     addImage (image) {
-      // console.log(image)
-      console.log(this.canvas)
       fabric.Image.fromURL(image, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 400
         image.scaleX = 0.5
         image.scaleY = 0.5
-        console.log(image)
         this.canvas.add(image)
       })
     },
     addDate () {
       const today = moment().format('YYYY/MM/DD')
-      const text = new fabric.Text(today, (image) => {
-        image.top = 10
-        image.left = 10
+      const date = new fabric.Text(today, (image) => {
+        image.top = 200
         image.scaleX = 0.5
         image.scaleY = 0.5
       })
-      this.canvas.add(text)
+      this.canvas.add(date)
     },
     addText () {
-      const editText = new fabric.IText('雙擊我編輯', {
-        top: 400,
-        left: 400
+      console.log(1231)
+      // const text = new fabric.IText('雙擊我編輯', {
+      //   top: 400,
+      //   left: 400
+      // })
+      // this.canvas.add(text)
+      this.$swal.fire({
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        customClass: {
+          popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
+          title: 'customClass-title font-bold text-black pt-6 px-0',
+          input: 'customClass-input',
+          inputLabel: '',
+          actions: 'btns',
+          confirmButton: 'btn btn-confirm',
+          cancelButton: 'btn btn-cancel'
+        }
+      }).then((result) => {
+        // const canvas = new fabric.Canvas('canvas')
+
+        const text = new fabric.Text(result.value, (image) => {
+          image.top = 10
+          image.left = 10
+          image.scaleX = 0.5
+          image.scaleY = 0.5
+        })
+        this.canvas.add(text)
       })
-      this.canvas.add(editText)
     },
     downloadPDF () {
       // 引入套件所提供的物件

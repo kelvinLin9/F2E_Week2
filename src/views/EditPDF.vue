@@ -1,28 +1,38 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
-    <div class="">
-      <canvas id="canvas" class="canvas test"></canvas>
+    <div class="canvas">
+      <canvas id="canvas" class=""
+              style="width:200% !important"
+            ></canvas>
     </div>
     <!-- 編輯區 -->
-    <div class="edit-pdf d-flex justify-content-center align-items-center bg-white test">
+    <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
       <div class="page d-flex justify-content-center align-items-center">
-        <img src="../assets/images/prev.png" alt="上一頁"
-          @click="prevPage()">
-        <div class="w-25 text-center">
-          {{pageNum}} / {{totalPage}}
+        <button class="btn">
+          <img src="../assets/images/prev.png" alt="上一頁"
+            @click="prevPage()">
+        </button>
+        <div class="text-center">
+          {{ pageNum }} / {{ totalPage }}
         </div>
-        <!-- <input type="text" class="w-25 mx-3"
-        v-model.number="pageNum"
-        > -->
-        <img src="../assets/images/next.png" alt="下一頁"
-            @click="nextPage()"
-        >
+        <button class="btn">
+          <img src="../assets/images/next.png" alt="下一頁"
+              @click="nextPage()">
+        </button>
       </div>
       <div class="scale d-flex justify-content-center align-items-center">
-        <img src="../assets/images/zoom-out.png" alt="">
-        <input type="number" class="w-25 mx-3">
-        <img src="../assets/images/zoom-in.png" alt="">
+        <button class="btn">
+          <img src="../assets/images/zoom-out.png" alt="縮小"
+              @click="zoomOut()">
+        </button>
+        <div class="text-center">
+          {{ width }} %
+        </div>
+        <button class="btn">
+          <img src="../assets/images/zoom-in.png" alt="放大"
+              @click="zoomIn()">
+        </button>
       </div>
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
@@ -104,11 +114,37 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['event', 'totalPage', 'width']),
+    ...mapState(pdfStore, ['event', 'totalPage', 'width', 'canvas']),
     ...mapWritableState(pdfStore, ['pageNum'])
   },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'addImage', 'addDate', 'addText'])
+    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
+    addText () {
+      this.$swal.fire({
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        customClass: {
+          popup: 'popup',
+          input: 'input-alert fs-16',
+          confirmButton: 'confirmButton fs-18',
+          cancelButton: 'cancelButton fs-18 text-primary'
+        }
+      }).then((result) => {
+        const text = new fabric.Text(result.value, (image) => {
+          image.top = 10
+          image.left = 10
+          image.scaleX = 1
+          image.scaleY = 1
+        })
+        this.canvas.add(text)
+      })
+    }
   },
   mounted () {
     this.analyzePDF()
@@ -118,9 +154,12 @@ export default {
 
 <style lang="scss" scoped>
 .canvas{
-  // position: absolute;
-  // max-width: 1280px;
-  // top: 50%;
+  position: relative;
+  width: 100%;
+  height: 626px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
 }
 .edit-pdf {
   width: 100%;

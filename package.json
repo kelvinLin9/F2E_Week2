@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.2",
+    "bootstrap-icons": "^1.10.2",
     "core-js": "^3.8.3",
     "moment": "^2.29.4",
     "pinia": "^2.0.23",
+    "sweetalert2": "^11.6.9",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue-sweetalert2": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
