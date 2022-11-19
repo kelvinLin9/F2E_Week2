@@ -114,12 +114,15 @@ export default defineStore('pdfStore', {
         this.width += 10
       }
     },
-    addImage (image) {
-      fabric.Image.fromURL(image, function (image) {
+    addImage (imageURL) {
+      console.log(12, this.canvas)
+      console.log(imageURL)
+      fabric.Image.fromURL(imageURL, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 400
         image.scaleX = 0.5
         image.scaleY = 0.5
+        console.log(image)
         this.canvas.add(image)
       })
     },

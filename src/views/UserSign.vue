@@ -4,7 +4,7 @@
       <img src="../assets/images/logo.png" alt="logo">
     </RouterLink>
     <button class="btn btn-primary text-white sign-history-btn"
-            @click="signHistoryView = true"
+            @click="signHistoryView = !signHistoryView"
     >
       歷史紀錄
     </button>
