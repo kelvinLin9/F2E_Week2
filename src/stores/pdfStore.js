@@ -10,12 +10,12 @@ export default defineStore('pdfStore', {
     totalPage: 0,
     scaleXY: 100,
     canvas: null,
-    pdfImage: null
+    pdfImage: null,
+    pdfData: null
   }),
   actions: {
     async uploadPDF (e) {
       this.event = e
-      console.log(typeof this.event.target.files[0].type)
       if (this.event.target.files[0].size > 10000000) {
         alert('檔案超過10MB，請重新選擇')
         return
@@ -37,6 +37,7 @@ export default defineStore('pdfStore', {
         reader.readAsDataURL(blob)
       })
     },
+    // 得到PDF長寬、設定了canvas長寬
     async printPDF (pdfData) {
       const Base64Prefix = 'data:application/pdf;base64,'
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js'
@@ -50,7 +51,6 @@ export default defineStore('pdfStore', {
       const pdfPage = await pdfDoc.getPage(this.pageNum)
       // 設定尺寸及產生 canvas
       const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio })
-      console.log(viewport)
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
 
@@ -87,23 +87,18 @@ export default defineStore('pdfStore', {
         router.push('/')
         return
       }
-      const pdfData = await this.printPDF(this.event.target.files[0])
-      const pdfImage = await this.pdfToImage(pdfData)
-      this.pdfImage = pdfImage
-      this.renderPage(canvas, pdfImage, image)
+      this.pdfData = await this.printPDF(this.event.target.files[0])
+      this.pdfImage = await this.pdfToImage(this.pdfData)
+      this.canvas = canvas
+      this.renderPage()
     },
     // 渲染(canvas, pdfImage)
-    async renderPage (canvas, pdfImage) {
+    async renderPage () {
       // 透過比例設定 canvas 尺寸
-      canvas.setWidth(pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
-      canvas.setHeight(pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
-      // 改看看
-      // console.log(pdfImage)
-      // canvas.setWidth(pdfImage.width * this.scaleXY / 100)
-      // canvas.setHeight(pdfImage.height * this.scaleXY / 100)
+      this.canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
+      this.canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
       // 將 PDF 畫面設定為背景
-      await canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
-      this.canvas = canvas
+      await this.canvas.setBackgroundImage(this.pdfImage, this.canvas.renderAll.bind(this.canvas))
     },
     prevPage () {
       if (this.pageNum <= 1) {
@@ -119,21 +114,21 @@ export default defineStore('pdfStore', {
       this.pageNum++
       this.analyzePDF()
     },
-    zoomOut () {
+    async zoomOut () {
       if (this.scaleXY > 50) {
         this.scaleXY -= 10
-        this.analyzePDF()
+        this.pdfImage = await this.pdfToImage(this.pdfData)
+        this.renderPage()
       }
     },
-    zoomIn () {
+    async zoomIn () {
       if (this.scaleXY < 150) {
         this.scaleXY += 10
-        this.analyzePDF()
+        this.pdfImage = await this.pdfToImage(this.pdfData)
+        this.renderPage()
       }
     },
     addImage (imageURL) {
-      console.log(12, this.canvas)
-      console.log(imageURL)
       fabric.Image.fromURL(imageURL, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 400
@@ -153,12 +148,6 @@ export default defineStore('pdfStore', {
       this.canvas.add(date)
     },
     addText () {
-      console.log(1231)
-      // const text = new fabric.IText('雙擊我編輯', {
-      //   top: 400,
-      //   left: 400
-      // })
-      // this.canvas.add(text)
       this.$swal.fire({
         input: 'textarea',
         inputAttributes: {
