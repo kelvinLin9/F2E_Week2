@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex d-flex justify-content-center align-items-center flex-column test">
+  <div class="container">
     <router-view/>
   </div>
 </template>

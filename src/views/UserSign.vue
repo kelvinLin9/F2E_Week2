@@ -6,7 +6,7 @@
     <button class="btn btn-primary text-white sign-history-btn"
             @click="signHistoryView = !signHistoryView"
     >
-      歷史紀錄
+      我的簽名檔
     </button>
     <div class="sign-history">
       <SignHistory v-if="signHistoryView"/>

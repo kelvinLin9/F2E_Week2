@@ -17,15 +17,19 @@
       <div class="col Noto-Sans-TC">
         <div class="input-pdf d-flex flex-column justify-content-center align-items-center mt-5">
           <img src="../assets/images/pdf-input.png" alt="">
-          <div class="bg-gradient text-white px-5 py-2 rounded-3">
-            <input type="file"
+          <div class="bg-gradient text-white rounded-3 position-relative">
+            <label for="upload" class="cursor-pointer upload-file-label" accept="application/pdf">
+              選擇檔案
+            </label>
+            <input type="file" id="upload"
               accept="application/pdf"
-              placeholder="選擇PDF檔案"
-              @change="inputPDF($event)"
+              class="cursor-pointer upload-file"
+              name="file-upload"
+              @change="uploadPDF($event)"
               />
           </div>
           <p class="fs-16 my-0">或拖曳檔案到此處</p>
-          <p class="fs-14 text-primary">(限10MB 內的PDF或JPG檔)</p>
+          <p class="fs-14 text-primary">(限10MB 內的PDF檔)</p>
         </div>
       </div>
     </div>
@@ -37,7 +41,9 @@
   <div class="bg-people3"></div>
   <div class="bg-potted-plant"></div>
   <div class="bg-seed"></div>
-  <!-- <canvas id="canvas" style="border: 1px solid #000"> </canvas>  -->
+  <div class="text-center Noto-Serif-TC pb-3 fs-12 design">
+    小綠簽 © Code: <a href="https://github.com/kelvinLin9" class="text-primary text-decoration-none">Kelvin Lin</a>   /  Design: <a href="https://www.behance.net/KT_Designer" class="text-primary text-decoration-none">KT</a>
+  </div>
 </template>
 
 <script>
@@ -46,11 +52,8 @@ import pdfStore from '@/stores/pdfStore'
 import signStore from '@/stores/signStore'
 export default {
   methods: {
-    ...mapActions(pdfStore, ['inputPDF']),
+    ...mapActions(pdfStore, ['uploadPDF']),
     ...mapActions(signStore, ['getSign'])
-  },
-  mounted () {
-    // this.getSign()
   }
 }
 </script>
@@ -79,5 +82,24 @@ export default {
   background: #FFFFFF;
   border: 2px dashed #B7B7B7;
   border-radius: 26px;
+}
+.cursor-pointer {
+  cursor:pointer;
+}
+.upload-file-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.upload-file {
+  width: 227px;
+  height: 60px;
+  opacity: 0;
+}
+.design {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
 }
 </style>

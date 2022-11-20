@@ -4,19 +4,28 @@ import moment from 'moment'
 
 export default defineStore('pdfStore', {
   state: () => ({
+    isLoading: false,
     event: {},
     pageNum: 1,
     totalPage: 0,
+    scaleXY: 100,
     canvas: null,
-    width: 100
+    pdfImage: null
   }),
   actions: {
-    inputPDF (e) {
+    async uploadPDF (e) {
       this.event = e
+      console.log(typeof this.event.target.files[0].type)
       if (this.event.target.files[0].size > 10000000) {
-        alert('.................')
+        alert('檔案超過10MB，請重新選擇')
+        return
+      } else if (this.event.target.files[0].type != 'application/pdf') {
+        alert('檔案格式錯誤，請重新選擇')
+        return
       }
-      this.analyzePDF()
+      this.isLoading = true
+      await this.analyzePDF()
+      this.isLoading = false
       this.gotoSign()
     },
     // 使用原生 FileReader 轉檔
@@ -63,8 +72,8 @@ export default defineStore('pdfStore', {
       // 回傳圖片
       return new fabric.Image(pdfData, {
         id: 'renderPDF',
-        scaleX: scale,
-        scaleY: scale
+        scaleX: scale * this.scaleXY / 100,
+        scaleY: scale * this.scaleXY / 100
       })
     },
     async analyzePDF (image) {
@@ -73,19 +82,25 @@ export default defineStore('pdfStore', {
       const canvas = new fabric.Canvas('canvas')
       // console.log(canvas)
       canvas.requestRenderAll()
+      // 避免重新整理後找不到檔案問題
+      if (!this.event.target) {
+        router.push('/')
+        return
+      }
       const pdfData = await this.printPDF(this.event.target.files[0])
       const pdfImage = await this.pdfToImage(pdfData)
+      this.pdfImage = pdfImage
       this.renderPage(canvas, pdfImage, image)
     },
     // 渲染(canvas, pdfImage)
     async renderPage (canvas, pdfImage) {
       // 透過比例設定 canvas 尺寸
-      // canvas.setWidth(pdfImage.width / window.devicePixelRatio)
-      // canvas.setHeight(pdfImage.height / window.devicePixelRatio)
+      canvas.setWidth(pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
+      canvas.setHeight(pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
       // 改看看
       // console.log(pdfImage)
-      canvas.setWidth(pdfImage.width)
-      canvas.setHeight(pdfImage.height)
+      // canvas.setWidth(pdfImage.width * this.scaleXY / 100)
+      // canvas.setHeight(pdfImage.height * this.scaleXY / 100)
       // 將 PDF 畫面設定為背景
       await canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
       this.canvas = canvas
@@ -105,13 +120,15 @@ export default defineStore('pdfStore', {
       this.analyzePDF()
     },
     zoomOut () {
-      if (this.width > 50) {
-        this.width -= 10
+      if (this.scaleXY > 50) {
+        this.scaleXY -= 10
+        this.analyzePDF()
       }
     },
     zoomIn () {
-      if (this.width < 150) {
-        this.width += 10
+      if (this.scaleXY < 150) {
+        this.scaleXY += 10
+        this.analyzePDF()
       }
     },
     addImage (imageURL) {

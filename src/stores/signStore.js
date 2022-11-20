@@ -3,7 +3,8 @@ import router from '../router'
 
 export default defineStore('signStore', {
   state: () => ({
-    signs: []
+    signs: [],
+    signMethod: 'handwriting'
   }),
   actions: {
     getSign () {
@@ -103,6 +104,9 @@ export default defineStore('signStore', {
     },
     gotoEditPDF () {
       router.push('/UserSign/EditPDF')
+    },
+    uploadImage (e) {
+      console.log(e)
     }
   }
 })

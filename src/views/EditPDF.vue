@@ -2,9 +2,7 @@
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
     <div class="canvas">
-      <canvas id="canvas" class=""
-              style="width:200% !important"
-            ></canvas>
+      <canvas id="canvas"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
@@ -27,7 +25,7 @@
               @click="zoomOut()">
         </button>
         <div class="text-center">
-          {{ width }} %
+          {{ scaleXY }} %
         </div>
         <button class="btn">
           <img src="../assets/images/zoom-in.png" alt="放大"
@@ -114,8 +112,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(pdfStore, ['event', 'totalPage', 'width', 'canvas']),
-    ...mapWritableState(pdfStore, ['pageNum'])
+    ...mapState(pdfStore, ['event', 'totalPage', 'canvas']),
+    ...mapWritableState(pdfStore, ['pageNum', 'scaleXY'])
   },
   methods: {
     ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
