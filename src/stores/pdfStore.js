@@ -140,10 +140,10 @@ export default defineStore('pdfStore', {
     },
     addDate () {
       const today = moment().format('YYYY/MM/DD')
-      const date = new fabric.Text(today, (image) => {
-        image.top = 200
-        image.scaleX = 0.5
-        image.scaleY = 0.5
+      const date = new fabric.Text(today, {
+        top: 200,
+        scaleX: 1,
+        scaleY: 1
       })
       this.canvas.add(date)
     },
