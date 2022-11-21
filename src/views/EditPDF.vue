@@ -35,7 +35,7 @@
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'sign'"
+                  @click="btn = 'sign', signHistoryView = !signHistoryView"
           >
             <img src="../assets/images/簽名1.png" alt="簽名1"
                 :class="{'d-none':btn === 'sign'}"
@@ -100,15 +100,23 @@
       </div>
     </div>
   </div>
+  <div class="sign-history">
+      <SignHistory v-if="signHistoryView"/>
+  </div>
 </template>
 
 <script>
+import SignHistory from '@/components/SignHistory.vue'
 import { mapState, mapActions, mapWritableState } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
 export default {
+  components: {
+    SignHistory
+  },
   data () {
     return {
-      btn: ''
+      btn: '',
+      signHistoryView: false
     }
   },
   computed: {
@@ -196,5 +204,18 @@ export default {
   align-items: center;
   border-radius: 9px;
   margin: 20px 12px 2px 12px;
+}
+.sign-history {
+  position: absolute;
+  top: 50%;
+  right: 1%;
+  transform: translate(0%, -50%);
+  background-color: #f0f0f0;
+  width: 343px;
+  max-height: 321px;
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11);
+  border-radius: 16px;
+  z-index: 100;
+  overflow: auto;
 }
 </style>

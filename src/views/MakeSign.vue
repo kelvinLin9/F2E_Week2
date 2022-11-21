@@ -37,7 +37,7 @@
     <div class="upload-img-here"
         v-if="this.signMethod === 'import'">
       <label for="upload" class="cursor-pointer upload-file-label" accept="image/png, image/jpeg">
-        請選擇檔案
+        請選擇檔案 (開發中)
       </label>
       <input type="file" id="upload"
             accept="image/png, image/jpeg"
@@ -130,6 +130,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: #B7B7B7;
 }
 .upload-file {
   width: 590px;

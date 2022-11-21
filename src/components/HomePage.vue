@@ -83,9 +83,6 @@ export default {
   border: 2px dashed #B7B7B7;
   border-radius: 26px;
 }
-.cursor-pointer {
-  cursor:pointer;
-}
 .upload-file-label {
   position: absolute;
   top: 50%;

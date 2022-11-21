@@ -106,7 +106,7 @@ export default defineStore('signStore', {
       router.push('/UserSign/EditPDF')
     },
     uploadImage (e) {
-      console.log(e)
+      console.log(e.target.files[0])
     }
   }
 })
