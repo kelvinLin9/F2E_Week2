@@ -35,62 +35,62 @@
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'sign', signHistoryView = !signHistoryView"
+                  @click="btnName = 'sign', signHistoryView = !signHistoryView"
           >
             <img src="../assets/images/簽名1.png" alt="簽名1"
-                :class="{'d-none':btn === 'sign'}"
+                :class="{'d-none':btnName === 'sign'}"
             >
             <img src="../assets/images/簽名2.png" alt="簽名2"
-                :class="{'d-none':btn !== 'sign'}"
+                :class="{'d-none':btnName !== 'sign'}"
             >
           </button>
           <p class="fs-12 text-gray"
-            :class="{'text-primary':btn === 'sign'}"
+            :class="{'text-primary':btnName === 'sign'}"
           >簽名</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'check'"
+                  @click="btnName = 'check'"
           >
             <img src="../assets/images/勾選1.png" alt="勾選1"
-                :class="{'d-none':btn === 'check'}"
+                :class="{'d-none':btnName === 'check'}"
             >
             <img src="../assets/images/勾選2.png" alt="勾選2"
-                :class="{'d-none':btn !== 'check'}"
+                :class="{'d-none':btnName !== 'check'}"
             >
           </button>
           <p class="fs-12 text-gray"
-            :class="{'text-primary':btn === 'check'}"
+            :class="{'text-primary':btnName === 'check'}"
           >勾選</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'date', addDate()"
+                  @click="btnName = 'date', addDate()"
           >
             <img src="../assets/images/日期1.png" alt="日期1"
-                :class="{'d-none':btn === 'date'}"
+                :class="{'d-none':btnName === 'date'}"
             >
             <img src="../assets/images/日期2.png" alt="日期2"
-                :class="{'d-none':btn !== 'date'}"
+                :class="{'d-none':btnName !== 'date'}"
             >
           </button>
           <p class="fs-12 text-gray"
-            :class="{'text-primary':btn === 'date'}"
+            :class="{'text-primary':btnName === 'date'}"
           >日期</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btn = 'word', addText()"
+                  @click="btnName = 'word', addText()"
           >
             <img src="../assets/images/文字1.png" alt="文字1"
-                :class="{'d-none':btn === 'word'}"
+                :class="{'d-none':btnName === 'word'}"
             >
             <img src="../assets/images/文字2.png" alt="文字2"
-                :class="{'d-none':btn !== 'word'}"
+                :class="{'d-none':btnName !== 'word'}"
             >
           </button>
           <p class="fs-12 text-gray"
-            :class="{'text-primary':btn === 'word'}"
+            :class="{'text-primary':btnName === 'word'}"
           >插入文字</p>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default {
   },
   data () {
     return {
-      btn: '',
+      btnName: '',
       signHistoryView: false
     }
   },

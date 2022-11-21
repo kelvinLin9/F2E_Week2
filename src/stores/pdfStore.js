@@ -134,7 +134,6 @@ export default defineStore('pdfStore', {
         image.top = 400
         image.scaleX = 0.5
         image.scaleY = 0.5
-        console.log(this.canvas)
         this.canvas.add(image)
       })
     },
