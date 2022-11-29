@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import router from '../router'
+import statusStore from './statusStore'
 
+const status = statusStore()
 export default defineStore('signStore', {
   state: () => ({
     signs: [],
@@ -87,6 +89,7 @@ export default defineStore('signStore', {
       this.getSign()
     },
     saveImage () {
+      status.isLoading = true
       if (this.signMethod === 'handwriting') {
         const canvas = document.querySelector('#canvasImage')
         console.log(canvas)
@@ -95,13 +98,18 @@ export default defineStore('signStore', {
         // console.log(this.signs)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.reset()
-        this.gotoEditPDF()
+        // 假裝一下有loading
+        setTimeout(() => {
+          status.isLoading = false
+          this.gotoEditPDF()
+        }, '3000')
       } else {
         console.log(this.imagePreview)
         this.signs.push(this.imagePreview)
         console.log(this.signs)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.imagePreview = ''
+        status.isLoading = false
         this.gotoEditPDF()
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative d-flex flex-column justify-content-center align-items-center Noto-Sans-TC test">
+  <div class="position-relative d-flex flex-column justify-content-center align-items-center Noto-Sans-TC">
     <!-- 選擇簽名方式 -->
     <div class="mt-5">
       <button class="btn py-2 my-3"
@@ -36,18 +36,18 @@
         height="224"
       ></canvas>
     </div>
-    <div class="upload-img-here test"
+    <div class="upload-img-here"
         v-if="this.signMethod === 'uploadImage'">
       <label for="upload" class="cursor-pointer upload-file-label" accept="image/png, image/jpeg">
         請選擇檔案
       </label>
       <input type="file" id="upload"
             accept="image/png, image/jpeg"
-            class="cursor-pointer upload-file test"
+            class="cursor-pointer upload-file"
             name="file-upload"
             @change="handleFileUpload($event)"
       />
-      <img :src="imagePreview" alt="預覽圖" class="test preview" v-if="imagePreview">
+      <img :src="imagePreview" alt="預覽圖" class="preview" v-if="imagePreview">
     </div>
     <div class="btn-group">
       <button class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">

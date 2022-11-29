@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading">
     <section class="loading">
-      <Vue3Lottie :animationData="loading" class="loading-icon"/>
+      <Vue3Lottie :animationData="ok" class="loading-icon"/>
       <p class="loading-text1 fs-23">上傳中...</p>
     </section>
   </div>
@@ -25,15 +25,14 @@ import { Vue3Lottie } from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
 import loading from '@/assets/json/loading.json'
 import ok from '@/assets/json/ok.json'
-import wrong from '@/assets/json/wrong.json'
-import { mapState, mapActions } from 'pinia'
-import pdfStore from '@/stores/pdfStore'
+// import wrong from '@/assets/json/wrong.json'
+import { mapState } from 'pinia'
+import statusStore from '@/stores/statusStore'
 export default {
   data () {
     return {
-      ok,
       loading,
-      wrong
+      ok
     }
   },
   components: {
@@ -41,7 +40,7 @@ export default {
     Vue3Lottie
   },
   computed: {
-    ...mapState(pdfStore, ['isLoading'])
+    ...mapState(statusStore, ['isLoading'])
   }
 }
 </script>
@@ -56,23 +55,4 @@ export default {
   width: 1280px;
   height: 720px;
 }
-.loading {
-  position: absolute;
-  width: 1280px;
-  height: 720px;
-  }
-  .loading-icon {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .loading-text1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 </style>

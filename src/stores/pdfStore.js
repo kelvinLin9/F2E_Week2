@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import router from '../router'
 import moment from 'moment'
+import statusStore from './statusStore'
+
+const status = statusStore()
 
 export default defineStore('pdfStore', {
   state: () => ({
-    isLoading: false,
     event: {},
     pageNum: 1,
     totalPage: 0,
@@ -23,9 +25,9 @@ export default defineStore('pdfStore', {
         alert('檔案格式錯誤，請重新選擇')
         return
       }
-      this.isLoading = true
+      status.isLoading = true
       await this.analyzePDF()
-      this.isLoading = false
+      status.isLoading = false
       this.gotoSign()
     },
     // 使用原生 FileReader 轉檔

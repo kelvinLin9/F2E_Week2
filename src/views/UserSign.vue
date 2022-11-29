@@ -1,13 +1,19 @@
 <template>
-  <div class="user-sign position-relative">
+  <div v-if="isLoading">
+    <section class="loading">
+      <Vue3Lottie :animationData="loading" class="loading-icon"/>
+      <p class="loading-text1 fs-23">上傳中...</p>
+    </section>
+  </div>
+  <div class="user-sign position-relative" v-else>
     <RouterLink to="/" class="logo">
       <img src="../assets/images/logo.png" alt="logo">
     </RouterLink>
-    <!-- <button class="btn btn-primary text-white sign-history-btn"
+    <button class="btn btn-primary text-white sign-history-btn"
             @click="signHistoryView = !signHistoryView"
     >
       管理簽名檔
-    </button> -->
+    </button>
     <div class="sign-history">
       <SignHistory v-if="signHistoryView"/>
     </div>
@@ -16,17 +22,27 @@
 </template>
 
 <script>
+import { mapState } from 'pinia'
 import SignHistory from '@/components/SignHistory.vue'
+import { Vue3Lottie } from 'vue3-lottie'
+import 'vue3-lottie/dist/style.css'
+import statusStore from '@/stores/statusStore'
+import loading from '@/assets/json/loading.json'
 
 export default {
   components: {
-    SignHistory
+    SignHistory,
+    Vue3Lottie
   },
   data () {
     return {
-      signHistoryView: false
+      signHistoryView: false,
+      loading
     }
-  }
+  },
+  computed: {
+    ...mapState(statusStore, ['isLoading'])
+  },
 }
 </script>
 
