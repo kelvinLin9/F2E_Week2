@@ -1,10 +1,12 @@
 <template>
   <div class="d-flex justify-content-center align-items-center flex-column">
     <div v-for="item in signs" :key="item" class="d-flex justify-content-center align-items-center my-2">
-      <img class="show-img cursor-pointer me-3"
+      <div class="img-wrap d-flex justify-content-center align-items-center">
+        <img class="show-img cursor-pointer me-3"
           :src = "item"
           @click="addImage(item)"
-      />
+        />
+      </div>
       <div class="cursor-pointer"
           @click="removeImage(item)">
         X
@@ -37,10 +39,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.show-img {
+.img-wrap {
   width: 271px;
   height: 61px;
   background: #FFFFFF;
   border-radius: 16px;
+}
+.show-img {
+  max-width: 260px;
+  max-height: 55px;
+  height: 100%;
+
 }
 </style>
