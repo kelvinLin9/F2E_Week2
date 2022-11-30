@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading">
     <section class="loading">
-      <Vue3Lottie :animationData="ok" class="loading-icon"/>
+      <Vue3Lottie :animationData="loading" class="loading-icon"/>
       <p class="loading-text1 fs-23">上傳中...</p>
     </section>
   </div>
