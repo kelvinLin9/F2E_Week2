@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { fabric } from 'fabric'
 import router from '../router'
 import moment from 'moment'
 import statusStore from './statusStore'
@@ -78,11 +79,12 @@ export default defineStore('pdfStore', {
         scaleY: scale * this.scaleXY / 100
       })
     },
-    async analyzePDF (image) {
+    async analyzePDF () {
       // 載入讀取畫面
       // 此處 canvas 套用 fabric.js
+      console.log(123)
       const canvas = new fabric.Canvas('canvas')
-      // console.log(canvas)
+      console.log(canvas)
       canvas.requestRenderAll()
       // 避免重新整理後找不到檔案問題
       if (!this.event.target) {
