@@ -26,9 +26,9 @@ export default defineStore('pdfStore', {
         alert('檔案格式錯誤，請重新選擇')
         return
       }
-      status.isLoading = true
-      await this.analyzePDF()
-      status.isLoading = false
+      // status.isLoading = true
+      // await this.analyzePDF()
+      // status.isLoading = false
       this.gotoSign()
     },
     // 使用原生 FileReader 轉檔
@@ -82,7 +82,6 @@ export default defineStore('pdfStore', {
     async analyzePDF () {
       // 載入讀取畫面
       // 此處 canvas 套用 fabric.js
-      console.log(123)
       const canvas = new fabric.Canvas('canvas')
       console.log(canvas)
       canvas.requestRenderAll()
@@ -101,6 +100,9 @@ export default defineStore('pdfStore', {
       // 透過比例設定 canvas 尺寸
       this.canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
       this.canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
+      console.log(this.canvas)
+      console.log(this.pdfImage)
+      console.log(this.canvas.setBackgroundImage)
       // 將 PDF 畫面設定為背景
       await this.canvas.setBackgroundImage(this.pdfImage, this.canvas.renderAll.bind(this.canvas))
     },
@@ -194,7 +196,7 @@ export default defineStore('pdfStore', {
       pdf.save('download.pdf')
     },
     gotoSign () {
-      router.push('/UserSign/MakeSign')
+      router.push('/UserSign/EditPDF')
     }
   }
 })

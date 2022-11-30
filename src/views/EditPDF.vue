@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
-    <div class="canvas">
-      <canvas id="canvas"></canvas>
+    <div class="canvas test">
+      <canvas id="canvas" class="test"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">

@@ -89,20 +89,20 @@ export default defineStore('signStore', {
       this.getSign()
     },
     saveImage () {
-      status.isLoading = true
+      // status.isLoading = true
       if (this.signMethod === 'handwriting') {
         const canvas = document.querySelector('#canvasImage')
-        console.log(canvas)
-        console.log(canvas.toDataURL('image/png'))
+        // console.log(canvas.toDataURL('image/png'))
         this.signs.push(canvas.toDataURL('image/png'))
         // console.log(this.signs)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.reset()
+        this.gotoEditPDF()
         // 假裝一下有loading
-        setTimeout(() => {
-          status.isLoading = false
-          this.gotoEditPDF()
-        }, '3000')
+        // setTimeout(() => {
+        //   status.isLoading = false
+        //   this.gotoEditPDF()
+        // }, '3000')
       } else {
         console.log(this.imagePreview)
         this.signs.push(this.imagePreview)
