@@ -27,6 +27,7 @@ export default defineStore('pdfStore', {
       }
       // 假裝一下有loading
       status.isLoading = true
+      this.analyzePDF() // 考慮拿掉
       setTimeout(() => {
         status.isLoading = false
         this.gotoSign()
@@ -194,7 +195,7 @@ export default defineStore('pdfStore', {
       pdf.save('download.pdf')
     },
     gotoSign () {
-      router.push('/UserSign/MakeSign')
+      router.push('/UserSign/FreeCanvas')
     }
   }
 })
