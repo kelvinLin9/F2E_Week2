@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center align-items-center flex-column">
     <div v-for="item in signs" :key="item" class="d-flex justify-content-center align-items-center my-2">
-      <div class="img-wrap d-flex justify-content-center align-items-center">
+      <div class="img-wrap d-flex justify-content-center align-items-center me-3">
         <img class="show-img cursor-pointer me-3"
           :src = "item"
           @click="addImage(item)"
@@ -9,7 +9,7 @@
       </div>
       <div class="cursor-pointer"
           @click="removeImage(item)">
-        X
+        <i class="fa-solid fa-trash-can"></i>
       </div>
     </div>
     <div class="addSign cursor-pointer text-primary py-2 me-auto ms-3"

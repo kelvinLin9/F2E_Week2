@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     ...mapState(statusStore, ['isLoading'])
-  },
+  }
 }
 </script>
 

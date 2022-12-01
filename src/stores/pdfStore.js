@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { fabric } from 'fabric'
 import router from '../router'
 import moment from 'moment'
 import statusStore from './statusStore'
@@ -26,10 +25,12 @@ export default defineStore('pdfStore', {
         alert('檔案格式錯誤，請重新選擇')
         return
       }
-      // status.isLoading = true
-      // await this.analyzePDF()
-      // status.isLoading = false
-      this.gotoSign()
+      // 假裝一下有loading
+      status.isLoading = true
+      setTimeout(() => {
+        status.isLoading = false
+        this.gotoSign()
+      }, '2000')
     },
     // 使用原生 FileReader 轉檔
     readBlob (blob) {
@@ -67,6 +68,7 @@ export default defineStore('pdfStore', {
       const renderTask = pdfPage.render(renderContext)
 
       // 回傳做好的 PDF canvas
+      // console.log(canvas)
       return renderTask.promise.then(() => canvas)
     },
     async pdfToImage (pdfData) {
@@ -83,8 +85,8 @@ export default defineStore('pdfStore', {
       // 載入讀取畫面
       // 此處 canvas 套用 fabric.js
       const canvas = new fabric.Canvas('canvas')
-      console.log(canvas)
-      canvas.requestRenderAll()
+      this.canvas = canvas
+      this.canvas.requestRenderAll()
       // 避免重新整理後找不到檔案問題
       if (!this.event.target) {
         router.push('/')
@@ -92,7 +94,6 @@ export default defineStore('pdfStore', {
       }
       this.pdfData = await this.printPDF(this.event.target.files[0])
       this.pdfImage = await this.pdfToImage(this.pdfData)
-      this.canvas = canvas
       this.renderPage()
     },
     // 渲染(canvas, pdfImage)
@@ -100,9 +101,6 @@ export default defineStore('pdfStore', {
       // 透過比例設定 canvas 尺寸
       this.canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
       this.canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
-      console.log(this.canvas)
-      console.log(this.pdfImage)
-      console.log(this.canvas.setBackgroundImage)
       // 將 PDF 畫面設定為背景
       await this.canvas.setBackgroundImage(this.pdfImage, this.canvas.renderAll.bind(this.canvas))
     },
@@ -196,7 +194,7 @@ export default defineStore('pdfStore', {
       pdf.save('download.pdf')
     },
     gotoSign () {
-      router.push('/UserSign/EditPDF')
+      router.push('/UserSign/MakeSign')
     }
   }
 })

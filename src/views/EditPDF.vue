@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
-    <div class="canvas test">
+    <div class="canvas">
       <canvas id="canvas" class="test"></canvas>
     </div>
     <!-- 編輯區 -->

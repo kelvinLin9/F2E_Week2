@@ -104,9 +104,7 @@ export default defineStore('signStore', {
         //   this.gotoEditPDF()
         // }, '3000')
       } else {
-        console.log(this.imagePreview)
         this.signs.push(this.imagePreview)
-        console.log(this.signs)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.imagePreview = ''
         status.isLoading = false

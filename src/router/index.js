@@ -20,6 +20,11 @@ const routes = [
         path: 'EditPDF',
         name: 'EditPDF',
         component: () => import('../views/EditPDF.vue')
+      },
+      {
+        path: 'FreeCanvas',
+        name: 'FreeCanvas',
+        component: () => import('../views/FreeCanvas.vue')
       }
     ]
   }
