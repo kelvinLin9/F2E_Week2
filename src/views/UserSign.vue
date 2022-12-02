@@ -2,7 +2,7 @@
   <div v-if="isLoading">
     <section class="loading">
       <Vue3Lottie :animationData="loading" class="loading-icon"/>
-      <p class="loading-text1 fs-23">上傳中...</p>
+      <p class="loading-text1 fs-23">簽名優化中...</p>
     </section>
   </div>
   <div class="user-sign position-relative" v-else>
@@ -11,6 +11,7 @@
     </RouterLink>
     <button class="btn btn-primary text-white sign-history-btn"
             @click="signHistoryView = !signHistoryView"
+            v-if="$route.path == '/UserSign/MakeSign'"
     >
       管理簽名檔
     </button>
@@ -60,8 +61,8 @@ export default {
 }
 .sign-history-btn{
   position: absolute;
-  top: 20px;
-  right: 30px;
+  top: 68px;
+  right: 68px;
   z-index: 100;
 }
 .sign-history {

@@ -86,26 +86,15 @@ export default defineStore('signStore', {
       clearBtn.addEventListener('click', reset)
     },
     saveImage () {
-      // status.isLoading = true
       if (this.signMethod === 'handwriting') {
         const canvas = document.querySelector('#canvasImage')
-        // console.log(canvas.toDataURL('image/png'))
         this.signs.push(canvas.toDataURL('image/png'))
-        // console.log(this.signs)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.reset()
-        this.gotoEditPDF()
-        // 假裝一下有loading
-        // setTimeout(() => {
-        //   status.isLoading = false
-        //   this.gotoEditPDF()
-        // }, '3000')
       } else {
         this.signs.push(this.imagePreview)
         localStorage.setItem('signs', JSON.stringify(this.signs))
         this.imagePreview = ''
-        status.isLoading = false
-        this.gotoEditPDF()
       }
     },
     removeImage (item) {
@@ -119,7 +108,12 @@ export default defineStore('signStore', {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     },
     gotoEditPDF () {
-      router.push('/UserSign/EditPDF')
+      // 假裝loading
+      status.isLoading = true
+      setTimeout(() => {
+        status.isLoading = false
+        router.push('/UserSign/EditPDF')
+      }, '2000')
     },
     // 匯入簽名檔部分
     async handleFileUpload (e) {

@@ -2,7 +2,7 @@
   <div class="d-flex flex-column justify-content-center align-items-center">
     <!-- PDF -->
     <div class="canvas">
-      <canvas id="canvas" class="test"></canvas>
+      <canvas id="canvas"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
@@ -35,7 +35,7 @@
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btnName = 'sign', signHistoryView = !signHistoryView"
+                  @click="openSignHistory (), signHistoryView = !signHistoryView"
           >
             <img src="../assets/images/簽名1.png" alt="簽名1"
                 :class="{'d-none':btnName === 'sign'}"
@@ -76,11 +76,11 @@
           </button>
           <p class="fs-12 text-gray"
             :class="{'text-primary':btnName === 'date'}"
-          >日期</p>
+          >插入日期</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="btnName = 'word', addText()"
+                  @click="addText()"
           >
             <img src="../assets/images/文字1.png" alt="文字1"
                 :class="{'d-none':btnName === 'word'}"
@@ -126,6 +126,7 @@ export default {
   methods: {
     ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
     addText () {
+      this.btnName = 'word'
       this.$swal.fire({
         input: 'textarea',
         inputAttributes: {
@@ -149,7 +150,25 @@ export default {
           image.scaleY = 1
         })
         this.canvas.add(text)
+        this.btnName = ''
+      }).catch(() => {
+        this.btnName = ''
       })
+      // 右鍵刪除元素 先留著 等this.canvas問題解決
+      // this.canvas.on('mouse:down', canvasOnMouseDown)
+      // function canvasOnMouseDown (opt) {
+      //   if (opt.button === 3 && opt.target) {
+      //     console.log(opt.target)
+      //     this.canvas.remove(opt.target)
+      //   }
+      // }
+    },
+    openSignHistory () {
+      if (this.btnName === 'sign') {
+        this.btnName = ''
+      } else {
+        this.btnName = 'sign'
+      }
     }
   },
   mounted () {

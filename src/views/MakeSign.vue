@@ -58,9 +58,14 @@
       </button>
       <button class="save btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
               @click="saveImage()">
-        建立簽名
+        儲存
       </button>
+      <button class="goto-editPDF btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
+              @click="gotoEditPDF()">
+        下一步
+    </button>
     </div>
+
   </div>
 </template>
 
@@ -76,7 +81,7 @@ export default {
     ...mapWritableState(signStore, ['signMethod', 'imagePreview', 'color'])
   },
   methods: {
-    ...mapActions(signStore, ['getSign', 'saveImage', 'reset', 'handleFileUpload'])
+    ...mapActions(signStore, ['getSign', 'saveImage', 'reset', 'handleFileUpload', 'gotoEditPDF'])
   },
   mounted () {
     this.getSign()

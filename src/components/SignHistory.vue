@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center flex-column">
+  <div class="d-flex justify-content-center align-items-center flex-column Noto-Sans-TC">
+    <div class="text-primary mt-2">
+      請選擇簽名
+    </div>
     <div v-for="item in signs" :key="item" class="d-flex justify-content-center align-items-center my-2">
       <div class="img-wrap d-flex justify-content-center align-items-center me-3">
         <img class="show-img cursor-pointer me-3"
