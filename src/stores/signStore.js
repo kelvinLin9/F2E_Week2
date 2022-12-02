@@ -7,7 +7,8 @@ export default defineStore('signStore', {
   state: () => ({
     signs: [],
     signMethod: 'handwriting',
-    imagePreview: ''
+    imagePreview: '',
+    color: 'black'
   }),
   actions: {
     getSign () {
@@ -83,10 +84,6 @@ export default defineStore('signStore', {
       canvas.addEventListener('touchmove', draw)
 
       clearBtn.addEventListener('click', reset)
-    },
-    chooseColor (color) {
-      this.color = color
-      this.getSign()
     },
     saveImage () {
       // status.isLoading = true

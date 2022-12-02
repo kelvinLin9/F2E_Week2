@@ -31,7 +31,7 @@ export default defineStore('pdfStore', {
       setTimeout(() => {
         status.isLoading = false
         this.gotoSign()
-      }, '2000')
+      }, '1000')
     },
     // 使用原生 FileReader 轉檔
     readBlob (blob) {
@@ -85,7 +85,10 @@ export default defineStore('pdfStore', {
     async analyzePDF () {
       // 載入讀取畫面
       // 此處 canvas 套用 fabric.js
-      const canvas = new fabric.Canvas('canvas')
+      const canvas = new fabric.Canvas('canvas', {
+        fireRightClick: true, // 启用右键，button的数字为3
+        stopContextMenu: true // 禁止默认右键菜单
+      })
       this.canvas = canvas
       this.canvas.requestRenderAll()
       // 避免重新整理後找不到檔案問題
@@ -150,6 +153,17 @@ export default defineStore('pdfStore', {
         scaleY: 1
       })
       this.canvas.add(date)
+      // this.canvas.on('mouse:down', canvasOnMouseDown)
+      // function canvasOnMouseDown (opt) {
+      //   // 判断：右键，且在元素上右键
+      //   // opt.button: 1-左键；2-中键；3-右键
+      //   // 在画布上点击：opt.target 为 null
+      //   if (opt.button === 3 && opt.target) {
+      //     // 获取当前元素
+      //     console.log(opt.target)
+      //     this.canvas.remove(opt.target)
+      //   }
+      // }
     },
     addText () {
       this.$swal.fire({
@@ -195,7 +209,7 @@ export default defineStore('pdfStore', {
       pdf.save('download.pdf')
     },
     gotoSign () {
-      router.push('/UserSign/FreeCanvas')
+      router.push('/UserSign/MakeSign')
     }
   }
 })

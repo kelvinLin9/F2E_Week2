@@ -3,16 +3,16 @@
     <!-- 選擇簽名方式 -->
     <div class="mt-5">
       <button class="btn py-2 my-3"
-              @click="this.signMethod = 'handwriting'"
-              :class="{'btn-handwriting' :this.signMethod === 'handwriting',
-                        'btn-import' :this.signMethod === 'uploadImage',}"
+              @click="signMethod = 'handwriting'"
+              :class="{'btn-handwriting' :signMethod === 'handwriting',
+                        'btn-import' :signMethod === 'uploadImage',}"
       >
         手寫簽名
       </button>
       <button class="btn py-2 my-3"
-              @click="this.signMethod = 'uploadImage'"
-              :class="{'btn-handwriting' :this.signMethod === 'uploadImage',
-                      'btn-import' :this.signMethod === 'handwriting',}"
+              @click="signMethod = 'uploadImage'"
+              :class="{'btn-handwriting' :signMethod === 'uploadImage',
+                      'btn-import' :signMethod === 'handwriting',}"
       >
         匯入簽名檔
         </button>
@@ -22,14 +22,17 @@
         v-if="this.signMethod === 'handwriting'"
     >
       <div class="choose-color black mx-2 my-4 cursor-pointer"
-          @click="chooseColor('black')"></div>
+          :class="{'black-active' : color === 'black' }"
+          @click="color = 'black', getSign()"></div>
       <div class="choose-color blue mx-2 my-4 cursor-pointer"
-          @click="chooseColor('blue')"></div>
+          :class="{'blue-active' : color === 'blue' }"
+          @click="color = 'blue', getSign()"></div>
       <div class="choose-color red mx-2 my-4 cursor-pointer"
-          @click="chooseColor('red')"></div>
+          :class="{'red-active' : color === 'red' }"
+          @click="color = 'red', getSign()"></div>
     </div>
     <div class="sign-here"
-        v-if="this.signMethod === 'handwriting'">
+        v-show="this.signMethod === 'handwriting'">
       <canvas
         id="canvasImage"
         width="590"
@@ -37,7 +40,7 @@
       ></canvas>
     </div>
     <div class="upload-img-here"
-        v-if="this.signMethod === 'uploadImage'">
+        v-show="this.signMethod === 'uploadImage'">
       <label for="upload" class="cursor-pointer upload-file-label" accept="image/png, image/jpeg">
         請選擇檔案
       </label>
@@ -67,14 +70,13 @@ import signStore from '@/stores/signStore'
 export default {
   data () {
     return {
-      color: 'black'
     }
   },
   computed: {
-    ...mapWritableState(signStore, ['signMethod', 'imagePreview'])
+    ...mapWritableState(signStore, ['signMethod', 'imagePreview', 'color'])
   },
   methods: {
-    ...mapActions(signStore, ['getSign', 'chooseColor', 'saveImage', 'reset', 'handleFileUpload'])
+    ...mapActions(signStore, ['getSign', 'saveImage', 'reset', 'handleFileUpload'])
   },
   mounted () {
     this.getSign()
@@ -94,13 +96,25 @@ export default {
   background: #000;
   border-radius: 18px;
 }
+.black-active{
+    border: solid 2px #FFFFFF;
+    outline: solid 3px #000;
+}
 .blue {
   background: #0014C7;
   border-radius: 18px;
 }
+.blue-active{
+    border: solid 2px #FFFFFF;
+    outline: solid 3px #0014C7;
+}
 .red {
   background: #CA0000;
   border-radius: 18px;
+}
+.red-active{
+    border: solid 2px #FFFFFF;
+    outline: solid 3px #CA0000;
 }
 .sign-here {
   background: #FFFFFF;
