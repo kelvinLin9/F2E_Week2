@@ -27,7 +27,12 @@ const routes = [
         component: () => import('../views/FreeCanvas.vue')
       }
     ]
-  }
+  },
+  {
+    path: '/UserHistory',
+    name: 'UserHistory',
+    component: () => import('../views/UserHistory.vue')
+  },
 ]
 
 const router = createRouter({

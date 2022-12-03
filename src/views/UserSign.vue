@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
+import { mapState, mapWritableState } from 'pinia'
 import SignHistory from '@/components/SignHistory.vue'
 import { Vue3Lottie } from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
@@ -37,12 +37,12 @@ export default {
   },
   data () {
     return {
-      signHistoryView: false,
       loading
     }
   },
   computed: {
-    ...mapState(statusStore, ['isLoading'])
+    ...mapState(statusStore, ['isLoading']),
+    ...mapWritableState(statusStore, ['signHistoryView'])
   }
 }
 </script>

@@ -61,24 +61,25 @@
         儲存
       </button>
       <button class="goto-editPDF btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
-              @click="gotoEditPDF()">
+              @click="(gotoEditPDF(), signHistoryView = false)">
         下一步
     </button>
     </div>
-
   </div>
 </template>
 
 <script>
 import { mapActions, mapWritableState } from 'pinia'
 import signStore from '@/stores/signStore'
+import statusStore from '@/stores/statusStore'
 export default {
   data () {
     return {
     }
   },
   computed: {
-    ...mapWritableState(signStore, ['signMethod', 'imagePreview', 'color'])
+    ...mapWritableState(signStore, ['signMethod', 'imagePreview', 'color']),
+    ...mapWritableState(statusStore, ['signHistoryView'])
   },
   methods: {
     ...mapActions(signStore, ['getSign', 'saveImage', 'reset', 'handleFileUpload', 'gotoEditPDF'])

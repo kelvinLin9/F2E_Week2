@@ -5,12 +5,15 @@
       <p class="loading-text1 fs-23">上傳中...</p>
     </section>
   </div>
-  <div v-else
+  <div
       class="home d-flex justify-content-center align-items-center position-relative flex-column">
     <div class="logo">
       <img src="../assets/images/logo.png" alt="logo">
     </div>
-    <HomePage v-if="true"/>
+    <RouterLink to="/UserHistory" class="pdf-history Noto-Sans-TC fs-18 d-flex justify-content-center align-items-center px-3 py-1 ">
+      歷史紀錄
+    </RouterLink>
+    <HomePage v-if="!isLoading"/>
     <div class="homeBgs">
       <div class="bg-grassland-1"></div>
       <div class="bg-home1"></div>
@@ -50,6 +53,14 @@ export default {
   position: absolute;
   top: 20px;
   left: 30px;
+}
+.pdf-history {
+  position: absolute;
+  top: 35px;
+  right: 130px;
+  border: 2px solid #1C8B6A;
+  border-radius: 16px;
+  text-decoration: none;
 }
 .home {
   width: 1280px;

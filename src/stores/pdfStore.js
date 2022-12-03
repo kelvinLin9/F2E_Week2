@@ -13,7 +13,9 @@ export default defineStore('pdfStore', {
     scaleXY: 100,
     canvas: null,
     pdfImage: null,
-    pdfData: null
+    pdfData: null,
+    pdfName: '',
+    pdfHistory: []
   }),
   actions: {
     async uploadPDF (e) {
@@ -25,6 +27,7 @@ export default defineStore('pdfStore', {
         alert('檔案格式錯誤，請重新選擇')
         return
       }
+      this.pdfName = this.event.target.files[0].name
       // 假裝一下有loading
       status.isLoading = true
       setTimeout(() => {
@@ -200,6 +203,12 @@ export default defineStore('pdfStore', {
       const pdf = new jsPDF()
       // 將 canvas 存為圖片
       const image = canvas.toDataURL('image/png')
+      let obj = {}
+      obj.pdfImage = image
+      obj.pdfName = this.pdfName
+      this.pdfHistory.push(obj)
+      localStorage.setItem('pdfHistory', JSON.stringify(this.pdfHistory))
+      console.log(this.pdfHistory)
       // 設定背景在 PDF 中的位置及大小
       const width = pdf.internal.pageSize.width
       const height = pdf.internal.pageSize.height
