@@ -81,7 +81,6 @@ export default defineStore('pdfStore', {
       })
     },
     async analyzePDF () {
-      console.log(this.event.target.files[0])
       this.pdfData = await this.printPDF(this.event.target.files[0])
       this.pdfImage = await this.pdfToImage(this.pdfData)
       // 假裝一下有loading
@@ -93,7 +92,7 @@ export default defineStore('pdfStore', {
     },
     // 渲染(canvas, pdfImage)
     async renderPage () {
-      console.log(this.pdfImage)
+      // 解決從新整理找不到檔案問題
       if (!this.pdfImage) {
         router.push('/')
         return
@@ -103,10 +102,7 @@ export default defineStore('pdfStore', {
         stopContextMenu: true // 禁止默认右键菜单
       })
       canvas.requestRenderAll()
-      // 避免重新整理後找不到檔案問題
-
       // 透過比例設定 canvas 尺寸
-      console.log(123)
       canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
       canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
       // 將 PDF 畫面設定為背景
@@ -184,7 +180,7 @@ export default defineStore('pdfStore', {
       const obj = {}
       obj.pdfImage = this.pdfImage
       obj.pdfImageUrl = imageUrl
-      obj.pdfName = this.pdfName
+      obj.pdfName = filename
       obj.pdfYear = new Date().getFullYear()
       obj.pdfMonth = new Date().getMonth()
       obj.pdfDate = new Date().getDate()
@@ -195,8 +191,7 @@ export default defineStore('pdfStore', {
       const height = pdf.internal.pageSize.height
       pdf.addImage(imageUrl, 'png', 0, 0, width, height)
       pdf.save(`${filename}.pdf`)
-      // this.gotoUserHistory()
-      // 將檔案取名並下載
+      this.gotoUserHistory()
     },
     gotoSign () {
       router.push('/UserSign/MakeSign')

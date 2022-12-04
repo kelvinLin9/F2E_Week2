@@ -172,6 +172,7 @@ export default {
     },
     save () {
       this.$swal.fire({
+        title: '請輸入檔名',
         input: 'textarea',
         inputAttributes: {
           autocapitalize: 'off'
@@ -181,14 +182,17 @@ export default {
         confirmButtonText: '下載',
         cancelButtonText: '取消',
         customClass: {
+          title: 'fs-16',
           popup: 'popup',
           input: 'input-alert fs-16',
-          confirmButton: 'confirmButton fs-18',
-          cancelButton: 'cancelButton fs-18 text-primary'
+          confirmButton: 'confirmButton fs-16',
+          cancelButton: 'cancelButton fs-16 text-primary'
         }
       }).then((result) => {
-        console.log(result.value)
-        this.downloadPDF(result.value)
+        console.log(result)
+        if (result.isConfirmed) {
+          this.downloadPDF(result.value)
+        }
       }).catch((error) => {
         console.log(error)
       })

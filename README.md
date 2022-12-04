@@ -23,6 +23,8 @@ https://kelvinlin9.github.io/F2E_Week2/#/
 - PDF.js
 - fabric.js
 - jsPDF
+- fortawesome
+- moment
 
 
 
