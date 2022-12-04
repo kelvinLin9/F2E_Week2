@@ -23,37 +23,3 @@
 .test {
   outline: solid 3px red;
 }
-
-.confirmButton {
-  font-family: 'Noto Sans TC' !important;
-  font-style: normal !important;
-  width: 136px !important;
-  height: 56px !important;
-  line-height: 26px !important;
-  background: linear-gradient(180deg, #35A483 0%, #077854 100%) !important;
-  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11) !important;
-  border-radius: 16px !important;
-}
-.cancelButton {
-  font-family: 'Noto Sans TC' !important;
-  font-style: normal !important;
-  width: 136px !important;
-  height: 56px !important;
-  line-height: 26px !important;
-  background: #fafafa !important;
-  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11) !important;
-  border-radius: 16px !important;
-}
-.popup {
-  width: 343px !important;
-  height: 204px !important;
-  background: #F0F0F0 !important;
-  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11) !important;
-  border-radius: 26px !important;
-}
-.input-alert {
-  width: 284px !important;
-  height: 84px !important;
-  background: #FFFFFF !important;
-  border-radius: 16px !important;
-}

@@ -128,6 +128,7 @@ export default {
     addText () {
       this.btnName = 'word'
       this.$swal.fire({
+        title: '請輸入文字',
         input: 'textarea',
         inputAttributes: {
           autocapitalize: 'off'
@@ -137,6 +138,7 @@ export default {
         confirmButtonText: '確定',
         cancelButtonText: '取消',
         customClass: {
+          title: 'fs-16',
           popup: 'popup',
           input: 'input-alert fs-16',
           confirmButton: 'confirmButton fs-18',
