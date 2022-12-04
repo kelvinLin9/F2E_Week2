@@ -153,9 +153,9 @@ export default defineStore('signStore', {
       const image = URL.createObjectURL(fileObj)
       this.imagePreview = image
     },
-    to64 (filee) {
+    to64 (File) {
       const formData = new FormData()
-      formData.append('iFile', filee)
+      formData.append('iFile', File)
       const file = formData.get('iFile')
       const reader = new FileReader()
       const fileType = file.type
