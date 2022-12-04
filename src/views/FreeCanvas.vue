@@ -1,5 +1,5 @@
 <template>
-  <div class="canvas test">
+  <div class="canvas">
     <canvas id="c" class="test" width="400" height="400"></canvas>
   </div>
   <button class="add-btn" @click="addDate">7788995</button>

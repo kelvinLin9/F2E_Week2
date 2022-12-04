@@ -52,6 +52,5 @@ export default {
   max-width: 260px;
   max-height: 55px;
   height: 100%;
-
 }
 </style>

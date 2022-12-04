@@ -15,7 +15,8 @@ export default defineStore('pdfStore', {
     pdfImage: null,
     pdfData: null,
     pdfName: '',
-    pdfHistory: []
+    pdfHistory: [],
+    pdfImageUrl: '' // 歷史紀錄回到編輯要用到的圖片路徑
   }),
   actions: {
     async uploadPDF (e) {
@@ -28,12 +29,7 @@ export default defineStore('pdfStore', {
         return
       }
       this.pdfName = this.event.target.files[0].name
-      // 假裝一下有loading
-      status.isLoading = true
-      setTimeout(() => {
-        status.isLoading = false
-        this.gotoSign()
-      }, '1000')
+      this.analyzePDF()
     },
     // 使用原生 FileReader 轉檔
     readBlob (blob) {
@@ -85,30 +81,43 @@ export default defineStore('pdfStore', {
       })
     },
     async analyzePDF () {
-      // 載入讀取畫面
-      // 此處 canvas 套用 fabric.js
+      console.log(this.event.target.files[0])
+      this.pdfData = await this.printPDF(this.event.target.files[0])
+      this.pdfImage = await this.pdfToImage(this.pdfData)
+      // 假裝一下有loading
+      status.isLoading = true
+      setTimeout(() => {
+        status.isLoading = false
+        this.gotoSign()
+      }, '1000')
+    },
+    // 渲染(canvas, pdfImage)
+    async renderPage () {
+      console.log(this.pdfImage)
+      if (!this.pdfImage) {
+        router.push('/')
+        return
+      }
       const canvas = new fabric.Canvas('canvas', {
         fireRightClick: true, // 启用右键，button的数字为3
         stopContextMenu: true // 禁止默认右键菜单
       })
-      this.canvas = canvas
-      this.canvas.requestRenderAll()
+      canvas.requestRenderAll()
       // 避免重新整理後找不到檔案問題
-      if (!this.event.target) {
-        router.push('/')
-        return
-      }
-      this.pdfData = await this.printPDF(this.event.target.files[0])
-      this.pdfImage = await this.pdfToImage(this.pdfData)
-      this.renderPage()
-    },
-    // 渲染(canvas, pdfImage)
-    async renderPage () {
+
       // 透過比例設定 canvas 尺寸
-      this.canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
-      this.canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
+      console.log(123)
+      canvas.setWidth(this.pdfImage.width / window.devicePixelRatio * this.scaleXY / 100)
+      canvas.setHeight(this.pdfImage.height / window.devicePixelRatio * this.scaleXY / 100)
       // 將 PDF 畫面設定為背景
-      await this.canvas.setBackgroundImage(this.pdfImage, this.canvas.renderAll.bind(this.canvas))
+      // 判斷是否從歷史紀錄回來此頁
+      // 暫時解決this.pdfImage存入localStorage解析後會改變的問題
+      if (this.pdfImageUrl) {
+        await canvas.setBackgroundImage(this.pdfImageUrl, canvas.renderAll.bind(canvas))
+      } else {
+        await canvas.setBackgroundImage(this.pdfImage, canvas.renderAll.bind(canvas))
+      }
+      this.canvas = canvas
     },
     prevPage () {
       if (this.pageNum <= 1) {
@@ -202,22 +211,36 @@ export default defineStore('pdfStore', {
       // 引入套件所提供的物件
       const pdf = new jsPDF()
       // 將 canvas 存為圖片
-      const image = canvas.toDataURL('image/png')
-      let obj = {}
-      obj.pdfImage = image
+      const imageUrl = canvas.toDataURL('image/png')
+      const obj = {}
+      obj.pdfImage = this.pdfImage
+      obj.pdfImageUrl = imageUrl
       obj.pdfName = this.pdfName
+      obj.pdfYear = new Date().getFullYear()
+      obj.pdfMonth = new Date().getMonth()
+      obj.pdfDate = new Date().getDate()
       this.pdfHistory.push(obj)
       localStorage.setItem('pdfHistory', JSON.stringify(this.pdfHistory))
-      console.log(this.pdfHistory)
       // 設定背景在 PDF 中的位置及大小
       const width = pdf.internal.pageSize.width
       const height = pdf.internal.pageSize.height
-      pdf.addImage(image, 'png', 0, 0, width, height)
+      pdf.addImage(imageUrl, 'png', 0, 0, width, height)
       // 將檔案取名並下載
-      pdf.save('download.pdf')
+      pdf.save(`小綠簽_${obj.pdfName}`)
+      this.gotoUserHistory()
     },
     gotoSign () {
       router.push('/UserSign/MakeSign')
+    },
+    gotoUserHistory () {
+      router.push('/UserHistory')
+    },
+    getPDFHistory () {
+      this.pdfHistory = JSON.parse(localStorage.getItem('pdfHistory')) || []
+    },
+    removePDFHistory (item) {
+      this.pdfHistory.splice(this.pdfHistory.indexOf(item), 1)
+      localStorage.setItem('pdfHistory', JSON.stringify(this.pdfHistory))
     }
   }
 })

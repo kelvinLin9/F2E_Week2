@@ -35,7 +35,7 @@
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <button class="edit-btn"
-                  @click="openSignHistory (), signHistoryView = !signHistoryView"
+                  @click="toggleSignHistory(), signHistoryView = !signHistoryView"
           >
             <img src="../assets/images/簽名1.png" alt="簽名1"
                 :class="{'d-none':btnName === 'sign'}"
@@ -124,7 +124,7 @@ export default {
     ...mapWritableState(pdfStore, ['pageNum', 'scaleXY'])
   },
   methods: {
-    ...mapActions(pdfStore, ['downloadPDF', 'analyzePDF', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
+    ...mapActions(pdfStore, ['getPDFHistory', 'downloadPDF', 'renderPage', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
     addText () {
       this.btnName = 'word'
       this.$swal.fire({
@@ -163,7 +163,7 @@ export default {
       //   }
       // }
     },
-    openSignHistory () {
+    toggleSignHistory () {
       if (this.btnName === 'sign') {
         this.btnName = ''
       } else {
@@ -172,7 +172,8 @@ export default {
     }
   },
   mounted () {
-    this.analyzePDF()
+    this.getPDFHistory()
+    this.renderPage()
   }
 }
 </script>

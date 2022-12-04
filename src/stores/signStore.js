@@ -100,7 +100,6 @@ export default defineStore('signStore', {
     removeImage (item) {
       this.signs.splice(this.signs.indexOf(item), 1)
       localStorage.setItem('signs', JSON.stringify(this.signs))
-      // this.getSign()
     },
     reset () {
       const canvas = document.querySelector('#canvasImage')
@@ -108,12 +107,7 @@ export default defineStore('signStore', {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     },
     gotoEditPDF () {
-      // 假裝loading
-      status.isLoading = true
-      setTimeout(() => {
-        status.isLoading = false
-        router.push('/UserSign/EditPDF')
-      }, '2000')
+      router.push('/UserSign/EditPDF')
     },
     // 匯入簽名檔部分
     async handleFileUpload (e) {
