@@ -27,7 +27,7 @@ https://kelvinlin9.github.io/F2E_Week2/#/
 - moment
 
 基於節省紙張綠化概念，根據使用次數，小樹苗會慢慢成長
-https://i.imgur.com/Xaf3hf6.png
+![](https://i.imgur.com/Xaf3hf6.png)
 
 ## Project setup
 ```
