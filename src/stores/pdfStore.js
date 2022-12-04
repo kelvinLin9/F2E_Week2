@@ -176,35 +176,6 @@ export default defineStore('pdfStore', {
       //   }
       // }
     },
-    addText () {
-      this.$swal.fire({
-        input: 'textarea',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: '確定',
-        cancelButtonText: '取消',
-        customClass: {
-          popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
-          title: 'customClass-title font-bold text-black pt-6 px-0',
-          input: 'customClass-input',
-          inputLabel: '',
-          actions: 'btns',
-          confirmButton: 'btn btn-confirm',
-          cancelButton: 'btn btn-cancel'
-        }
-      }).then((result) => {
-        const text = new fabric.Text(result.value, (image) => {
-          image.top = 10
-          image.left = 10
-          image.scaleX = 0.5
-          image.scaleY = 0.5
-        })
-        this.canvas.add(text)
-      })
-    },
     downloadPDF (filename) {
       // 引入套件所提供的物件
       const pdf = new jsPDF()

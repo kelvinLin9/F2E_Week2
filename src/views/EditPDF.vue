@@ -178,20 +178,19 @@ export default {
         },
         focusConfirm: false,
         showCancelButton: true,
-        confirmButtonText: '確定',
+        confirmButtonText: '下載',
         cancelButtonText: '取消',
         customClass: {
-          popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
-          title: 'customClass-title font-bold text-black pt-6 px-0',
-          input: 'customClass-input',
-          inputLabel: '',
-          actions: 'btns',
-          confirmButton: 'btn btn-confirm',
-          cancelButton: 'btn btn-cancel'
+          popup: 'popup',
+          input: 'input-alert fs-16',
+          confirmButton: 'confirmButton fs-18',
+          cancelButton: 'cancelButton fs-18 text-primary'
         }
       }).then((result) => {
         console.log(result.value)
         this.downloadPDF(result.value)
+      }).catch((error) => {
+        console.log(error)
       })
     }
   },
