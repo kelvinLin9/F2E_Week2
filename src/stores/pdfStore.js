@@ -67,7 +67,6 @@ export default defineStore('pdfStore', {
       const renderTask = pdfPage.render(renderContext)
 
       // 回傳做好的 PDF canvas
-      // console.log(canvas)
       return renderTask.promise.then(() => canvas)
     },
     async pdfToImage (pdfData) {

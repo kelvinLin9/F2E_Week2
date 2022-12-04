@@ -76,7 +76,6 @@ export default {
   },
   mounted () {
     this.getPDFHistory()
-    console.log(this.pdfHistory)
     // localStorage.clear()
   }
 }

@@ -111,7 +111,6 @@ export default defineStore('signStore', {
     },
     // 匯入簽名檔部分
     async handleFileUpload (e) {
-      console.log(e.target.files[0])
       try {
         const file = e.target.files[0]
         if (!file) return
@@ -120,7 +119,6 @@ export default defineStore('signStore', {
         if (!beforeUploadCheck.isValid) {
           throw beforeUploadCheck.errorMessages
         }
-        // this.showPreviewImage(file)
         this.to64(file)
       } catch (error) {
         alert(error)
@@ -154,13 +152,11 @@ export default defineStore('signStore', {
     showPreviewImage (fileObj) {
       const image = URL.createObjectURL(fileObj)
       this.imagePreview = image
-      console.log(this.imagePreview)
     },
     to64 (filee) {
       const formData = new FormData()
       formData.append('iFile', filee)
       const file = formData.get('iFile')
-      console.log('==>', file)
       const reader = new FileReader()
       const fileType = file.type
       reader.readAsDataURL(file)

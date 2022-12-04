@@ -191,7 +191,6 @@ export default {
           cancelButton: 'cancelButton fs-16 text-primary'
         }
       }).then((result) => {
-        console.log(result)
         if (result.isConfirmed) {
           this.downloadPDF(result.value)
         }
