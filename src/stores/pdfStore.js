@@ -196,8 +196,6 @@ export default defineStore('pdfStore', {
           cancelButton: 'btn btn-cancel'
         }
       }).then((result) => {
-        // const canvas = new fabric.Canvas('canvas')
-
         const text = new fabric.Text(result.value, (image) => {
           image.top = 10
           image.left = 10
@@ -207,7 +205,7 @@ export default defineStore('pdfStore', {
         this.canvas.add(text)
       })
     },
-    downloadPDF () {
+    downloadPDF (filename) {
       // 引入套件所提供的物件
       const pdf = new jsPDF()
       // 將 canvas 存為圖片
@@ -225,9 +223,9 @@ export default defineStore('pdfStore', {
       const width = pdf.internal.pageSize.width
       const height = pdf.internal.pageSize.height
       pdf.addImage(imageUrl, 'png', 0, 0, width, height)
+      pdf.save(`${filename}.pdf`)
+      // this.gotoUserHistory()
       // 將檔案取名並下載
-      pdf.save(`小綠簽_${obj.pdfName}`)
-      this.gotoUserHistory()
     },
     gotoSign () {
       router.push('/UserSign/MakeSign')

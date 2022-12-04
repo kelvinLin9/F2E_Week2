@@ -95,7 +95,7 @@
         </div>
       </div>
       <div class="download btn d-flex justify-content-center align-items-center fs-18 text-white"
-          @click="downloadPDF()">
+          @click="save()">
         完成簽署
       </div>
     </div>
@@ -169,6 +169,30 @@ export default {
       } else {
         this.btnName = 'sign'
       }
+    },
+    save () {
+      this.$swal.fire({
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        customClass: {
+          popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
+          title: 'customClass-title font-bold text-black pt-6 px-0',
+          input: 'customClass-input',
+          inputLabel: '',
+          actions: 'btns',
+          confirmButton: 'btn btn-confirm',
+          cancelButton: 'btn btn-cancel'
+        }
+      }).then((result) => {
+        console.log(result.value)
+        this.downloadPDF(result.value)
+      })
     }
   },
   mounted () {
