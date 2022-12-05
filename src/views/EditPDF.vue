@@ -1,8 +1,11 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
+    <p class="mt-5 text-primary fs-16 Noto-Sans-TC">
+      點擊滑鼠右鍵可刪除插入圖片
+    </p>
     <!-- PDF -->
     <div class="canvas">
-      <canvas id="canvas" class="test"></canvas>
+      <canvas id="canvas"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
@@ -124,7 +127,7 @@ export default {
     ...mapWritableState(pdfStore, ['pageNum', 'scaleXY'])
   },
   methods: {
-    ...mapActions(pdfStore, ['getPDFHistory', 'downloadPDF', 'renderPage', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate']),
+    ...mapActions(pdfStore, ['getPDFHistory', 'downloadPDF', 'renderPage', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate', 'addTextToPDF', 'removeCanvas']),
     addText () {
       this.btnName = 'word'
       this.$swal.fire({
@@ -145,13 +148,7 @@ export default {
           cancelButton: 'cancelButton fs-18 text-primary'
         }
       }).then((result) => {
-        const text = new fabric.Text(result.value, (image) => {
-          image.top = 10
-          image.left = 10
-          image.scaleX = 1
-          image.scaleY = 1
-        })
-        this.canvas.add(text)
+        this.addTextToPDF(result)
         this.btnName = ''
       }).catch(() => {
         this.btnName = ''
@@ -202,6 +199,7 @@ export default {
   mounted () {
     this.getPDFHistory()
     this.renderPage()
+    this.removeCanvas()
   }
 }
 </script>

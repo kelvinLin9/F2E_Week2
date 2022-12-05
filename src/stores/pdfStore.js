@@ -4,14 +4,13 @@ import moment from 'moment'
 import statusStore from './statusStore'
 
 const status = statusStore()
-
+let canvas = null
 export default defineStore('pdfStore', {
   state: () => ({
     event: {},
     pageNum: 1,
     totalPage: 0,
     scaleXY: 100,
-    canvas: null,
     pdfImage: null,
     pdfData: null,
     pdfName: '',
@@ -82,9 +81,9 @@ export default defineStore('pdfStore', {
     },
     async analyzePDF () {
       this.pdfData = await this.printPDF(this.event.target.files[0])
-      console.log(this.pdfData)
+      // console.log(this.pdfData)
       this.pdfImage = await this.pdfToImage(this.pdfData)
-      console.log(this.pdfImage)
+      // console.log(this.pdfImage)
       // 假裝一下有loading
       status.isLoading = true
       setTimeout(() => {
@@ -100,7 +99,7 @@ export default defineStore('pdfStore', {
         router.push('/')
         return
       }
-      const canvas = new fabric.Canvas('canvas', {
+      canvas = new fabric.Canvas('canvas', {
         fireRightClick: true, // 启用右键，button的数字为3
         stopContextMenu: true // 禁止默认右键菜单
       })
@@ -116,7 +115,7 @@ export default defineStore('pdfStore', {
       } else {
         await canvas.setBackgroundImage(this.pdfImage, canvas.renderAll.bind(canvas))
       }
-      this.canvas = canvas
+      // this.canvas = canvas
     },
     prevPage () {
       if (this.pageNum <= 1) {
@@ -152,7 +151,7 @@ export default defineStore('pdfStore', {
         image.top = 400
         image.scaleX = 0.5
         image.scaleY = 0.5
-        this.canvas.add(image)
+        canvas.add(image)
       })
     },
     addDate () {
@@ -162,18 +161,29 @@ export default defineStore('pdfStore', {
         scaleX: 1,
         scaleY: 1
       })
-      this.canvas.add(date)
-      // this.canvas.on('mouse:down', canvasOnMouseDown)
-      // function canvasOnMouseDown (opt) {
-      //   // 判断：右键，且在元素上右键
-      //   // opt.button: 1-左键；2-中键；3-右键
-      //   // 在画布上点击：opt.target 为 null
-      //   if (opt.button === 3 && opt.target) {
-      //     // 获取当前元素
-      //     console.log(opt.target)
-      //     this.canvas.remove(opt.target)
-      //   }
-      // }
+      canvas.add(date)
+    },
+    addTextToPDF (result) {
+      const text = new fabric.Text(result.value, (image) => {
+        image.top = 10
+        image.left = 10
+        image.scaleX = 1
+        image.scaleY = 1
+      })
+      canvas.add(text)
+    },
+    removeCanvas () {
+      canvas.on('mouse:down', canvasOnMouseDown)
+      function canvasOnMouseDown (opt) {
+        // 判断：右键，且在元素上右键
+        // opt.button: 1-左键；2-中键；3-右键
+        // 在画布上点击：opt.target 为 null
+        if (opt.button === 3 && opt.target) {
+          // 获取当前元素
+          console.log(opt.target)
+          canvas.remove(opt.target)
+        }
+      }
     },
     downloadPDF (filename) {
       // 引入套件所提供的物件
