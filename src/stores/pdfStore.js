@@ -16,7 +16,7 @@ export default defineStore('pdfStore', {
     pdfData: null,
     pdfName: '',
     pdfHistory: [],
-    pdfImageUrl: '', // 歷史紀錄回到編輯要用到的圖片路徑
+    fromHistory: false,
     cacheSearch: ''
   }),
   actions: {
@@ -82,7 +82,9 @@ export default defineStore('pdfStore', {
     },
     async analyzePDF () {
       this.pdfData = await this.printPDF(this.event.target.files[0])
+      console.log(this.pdfData)
       this.pdfImage = await this.pdfToImage(this.pdfData)
+      console.log(this.pdfImage)
       // 假裝一下有loading
       status.isLoading = true
       setTimeout(() => {
@@ -93,6 +95,7 @@ export default defineStore('pdfStore', {
     // 渲染(canvas, pdfImage)
     async renderPage () {
       // 解決從新整理找不到檔案問題
+      console.log(this.pdfImage)
       if (!this.pdfImage) {
         router.push('/')
         return
@@ -108,8 +111,8 @@ export default defineStore('pdfStore', {
       // 將 PDF 畫面設定為背景
       // 判斷是否從歷史紀錄回來此頁
       // 暫時解決this.pdfImage存入localStorage解析後會改變的問題
-      if (this.pdfImageUrl) {
-        await canvas.setBackgroundImage(this.pdfImageUrl, canvas.renderAll.bind(canvas))
+      if (this.fromHistory) {
+        await canvas.setBackgroundImage(this.pdfImage.src, canvas.renderAll.bind(canvas))
       } else {
         await canvas.setBackgroundImage(this.pdfImage, canvas.renderAll.bind(canvas))
       }
@@ -179,7 +182,7 @@ export default defineStore('pdfStore', {
       const imageUrl = canvas.toDataURL('image/png')
       const obj = {}
       obj.pdfImage = this.pdfImage
-      obj.pdfImageUrl = imageUrl
+      obj.pdfData = this.pdfData
       obj.pdfName = filename
       obj.pdfYear = new Date().getFullYear()
       obj.pdfMonth = new Date().getMonth()
@@ -209,7 +212,6 @@ export default defineStore('pdfStore', {
   },
   getters: {
     filterFiles () {
-      console.log(this.cacheSearch)
       return this.pdfHistory.filter((item) => {
         return item.pdfName.match(this.cacheSearch)
       })

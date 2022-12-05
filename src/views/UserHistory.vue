@@ -34,7 +34,7 @@
           {{ item.pdfMonth }} / {{ item.pdfDate }}
         </div>
         <div class="Noto-Sans-TC ms-4 text-primary cursor-pointer"
-              @click="pdfImage = item.pdfImage,pdfImageUrl = item.pdfImageUrl, gotoEditPDF()">
+              @click="pdfImage = item.pdfImage,pdfData = item.pdfData, fromHistory = true, gotoEditPDF()">
           {{ item.pdfName }}
         </div>
         <div class="ms-auto me-3 cursor-pointer"
@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapState(statusStore, ['signHistoryView']),
     ...mapState(pdfStore, ['pdfHistory', 'filterFiles']),
-    ...mapWritableState(pdfStore, ['pdfImage', 'pdfImageUrl', 'cacheSearch'])
+    ...mapWritableState(pdfStore, ['pdfImage', 'pdfData', 'fromHistory', 'cacheSearch'])
   },
   methods: {
     ...mapActions(pdfStore, ['getPDFHistory', 'removePDFHistory']),
@@ -87,8 +87,6 @@ export default {
   },
   mounted () {
     this.getPDFHistory()
-    console.log(this.cacheSearch)
-    console.log(this.filterFiles)
     // localStorage.clear()
   }
 }
