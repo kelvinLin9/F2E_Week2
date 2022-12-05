@@ -1,8 +1,12 @@
 # 2022 F2E 4th Week-2 | 今晚，我想來點點簽
-
+![](https://i.imgur.com/ImZxIz6.png)
 ## 專案簡介
 
-此為參加六角學院所舉辦的The F2E第二週作品，目前只完成桌面版，手機版後續會再補完
+此為參加六角學院所舉辦的The F2E第二週作品，使用線上簽署PDF節省紙張，隨著使用次數上升，小樹苗會慢慢成長
+
+![](https://i.imgur.com/Xaf3hf6.png)
+
+目前只完成桌面版，手機版後續會再補完
 > 活動網址：https://2022.thef2e.com/
 
 > 設計稿提供：[KT](https://2022.thef2e.com/users/12061579703802991521)
@@ -25,9 +29,6 @@ https://kelvinlin9.github.io/F2E_Week2/#/
 - jsPDF
 - fortawesome
 - moment
-
-基於節省紙張綠化概念，根據使用次數，小樹苗會慢慢成長
-![](https://i.imgur.com/Xaf3hf6.png)
 
 ## Project setup
 ```
