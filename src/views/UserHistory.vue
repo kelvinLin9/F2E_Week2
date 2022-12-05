@@ -13,12 +13,23 @@
       <img src="../assets/images/sapling0.png" alt="枯樹苗">
       <p class="fs-18 Noto-Sans-TC mt-3">尚無任何記錄</p>
     </div>
+
+    <div v-if="pdfHistory.length"
+        class="form-floating my-3 mt-lg-0 search">
+      <input type="search" class="form-control" id="search" placeholder="search"
+      v-model="cacheSearch">
+      <label for="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+        search
+      </label>
+    </div>
+
     <div v-if="pdfHistory.length"
           class="pdf-history-warp">
       <div class="Roboto ms-3">
         2022
       </div>
-      <div class="pdf-history m-3" v-for="item in pdfHistory" :key="item">
+      <div class="pdf-history m-3" v-for="item in filterFiles" :key="item">
         <div class="Roboto ms-3">
           {{ item.pdfMonth }} / {{ item.pdfDate }}
         </div>
@@ -67,8 +78,8 @@ export default {
   },
   computed: {
     ...mapState(statusStore, ['signHistoryView']),
-    ...mapState(pdfStore, ['pdfHistory']),
-    ...mapWritableState(pdfStore, ['pdfImage', 'pdfImageUrl'])
+    ...mapState(pdfStore, ['pdfHistory', 'filterFiles']),
+    ...mapWritableState(pdfStore, ['pdfImage', 'pdfImageUrl', 'cacheSearch'])
   },
   methods: {
     ...mapActions(pdfStore, ['getPDFHistory', 'removePDFHistory']),
@@ -76,6 +87,8 @@ export default {
   },
   mounted () {
     this.getPDFHistory()
+    console.log(this.cacheSearch)
+    console.log(this.filterFiles)
     // localStorage.clear()
   }
 }
@@ -115,5 +128,10 @@ export default {
   box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11);
   border-radius: 13px;
   text-decoration: none;
+}
+.search {
+  width: 630px;
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.11);
+  border-radius: 13px ;
 }
 </style>

@@ -16,7 +16,8 @@ export default defineStore('pdfStore', {
     pdfData: null,
     pdfName: '',
     pdfHistory: [],
-    pdfImageUrl: '' // 歷史紀錄回到編輯要用到的圖片路徑
+    pdfImageUrl: '', // 歷史紀錄回到編輯要用到的圖片路徑
+    cacheSearch: ''
   }),
   actions: {
     async uploadPDF (e) {
@@ -204,6 +205,14 @@ export default defineStore('pdfStore', {
     removePDFHistory (item) {
       this.pdfHistory.splice(this.pdfHistory.indexOf(item), 1)
       localStorage.setItem('pdfHistory', JSON.stringify(this.pdfHistory))
+    }
+  },
+  getters: {
+    filterFiles () {
+      console.log(this.cacheSearch)
+      return this.pdfHistory.filter((item) => {
+        return item.pdfName.match(this.cacheSearch)
+      })
     }
   }
 })

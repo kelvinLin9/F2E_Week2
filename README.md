@@ -30,6 +30,24 @@ https://kelvinlin9.github.io/F2E_Week2/#/
 - fortawesome
 - moment
 
+## 功能
+- 首頁
+  - 上傳pdf檔
+- 簽名
+  - 手寫、選擇畫筆顏色
+  - 上傳簽名檔
+- 編輯PDF
+  - 縮放
+  - 換頁
+  - 貼上簽名
+  - 貼上日期
+  - 貼上自訂文字
+  - 下載
+- 歷史頁面
+  - 樹苗隨著使用次數成長
+  - 再次編輯
+  - 搜尋
+
 ## Project setup
 ```
 npm install
