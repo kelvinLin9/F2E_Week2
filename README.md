@@ -49,6 +49,10 @@ https://kelvinlin9.github.io/F2E_Week2/#/
   - 再次編輯
   - 搜尋
 
+## 待完成
+- [] RWD
+- [] 歷史紀錄解析度問題
+
 ## Project setup
 ```
 npm install

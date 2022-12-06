@@ -5,7 +5,7 @@
     </p>
     <!-- PDF -->
     <div class="canvas">
-      <canvas id="canvas"></canvas>
+      <canvas id="canvas" class="test"></canvas>
     </div>
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
@@ -124,10 +124,10 @@ export default {
   },
   computed: {
     ...mapState(pdfStore, ['event', 'totalPage', 'canvas']),
-    ...mapWritableState(pdfStore, ['pageNum', 'scaleXY'])
+    ...mapWritableState(pdfStore, ['pageNum', 'scaleXY', 'fromHistoryData'])
   },
   methods: {
-    ...mapActions(pdfStore, ['getPDFHistory', 'downloadPDF', 'renderPage', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate', 'addTextToPDF', 'removeCanvas']),
+    ...mapActions(pdfStore, ['getPDFHistory', 'downloadPDF', 'renderPage', 'prevPage', 'nextPage', 'zoomOut', 'zoomIn', 'addImage', 'addDate', 'addTextToPDF', 'removeCanvas', 'fromHistory']),
     addText () {
       this.btnName = 'word'
       this.$swal.fire({
@@ -198,8 +198,12 @@ export default {
   },
   mounted () {
     this.getPDFHistory()
-    this.renderPage()
-    this.removeCanvas()
+    if (this.fromHistoryData) {
+      this.fromHistory()
+    } else {
+      this.renderPage()
+      this.removeCanvas()
+    }
   }
 }
 </script>

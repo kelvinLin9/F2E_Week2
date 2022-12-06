@@ -15,7 +15,7 @@ export default defineStore('pdfStore', {
     pdfData: null,
     pdfName: '',
     pdfHistory: [],
-    fromHistory: false,
+    fromHistoryData: false,
     cacheSearch: ''
   }),
   actions: {
@@ -28,7 +28,6 @@ export default defineStore('pdfStore', {
         alert('檔案格式錯誤，請重新選擇')
         return
       }
-      this.pdfName = this.event.target.files[0].name
       this.analyzePDF()
     },
     // 使用原生 FileReader 轉檔
@@ -42,21 +41,28 @@ export default defineStore('pdfStore', {
     },
     // 得到PDF長寬、設定了canvas長寬
     async printPDF (pdfData) {
+      // console.log(pdfData)
       const Base64Prefix = 'data:application/pdf;base64,'
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js'
       // 將檔案處理成 base64
       pdfData = await this.readBlob(pdfData)
+      // console.log(pdfData)
       // 將 base64 中的前綴刪去，並進行解碼
       const data = atob(pdfData.substring(Base64Prefix.length))
+      // console.log(data)
       // 利用解碼的檔案，載入 PDF 檔及第一頁
       const pdfDoc = await pdfjsLib.getDocument({ data }).promise
+      // console.log(pdfDoc)
       this.totalPage = pdfDoc.numPages
       const pdfPage = await pdfDoc.getPage(this.pageNum)
+      // console.log(pdfPage)
       // 設定尺寸及產生 canvas
       const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio })
+      // console.log(viewport)
       const canvas = document.createElement('canvas')
+      // console.log(canvas)
       const context = canvas.getContext('2d')
-
+      // console.log(context)
       // 設定 PDF 所要顯示的寬高及渲染
       canvas.height = viewport.height
       canvas.width = viewport.width
@@ -65,15 +71,15 @@ export default defineStore('pdfStore', {
         viewport
       }
       const renderTask = pdfPage.render(renderContext)
-
+      // console.log(renderTask)
       // 回傳做好的 PDF canvas
       return renderTask.promise.then(() => canvas)
     },
-    async pdfToImage (pdfData) {
+    async pdfToImage () {
       // 設定 PDF 轉為圖片時的比例
       const scale = 1 / window.devicePixelRatio
       // 回傳圖片
-      return new fabric.Image(pdfData, {
+      return new fabric.Image(this.pdfData, {
         id: 'renderPDF',
         scaleX: scale * this.scaleXY / 100,
         scaleY: scale * this.scaleXY / 100
@@ -81,9 +87,9 @@ export default defineStore('pdfStore', {
     },
     async analyzePDF () {
       this.pdfData = await this.printPDF(this.event.target.files[0])
-      // console.log(this.pdfData)
+      console.log(this.pdfData)
       this.pdfImage = await this.pdfToImage(this.pdfData)
-      // console.log(this.pdfImage)
+      console.log(this.pdfImage)
       // 假裝一下有loading
       status.isLoading = true
       setTimeout(() => {
@@ -110,7 +116,7 @@ export default defineStore('pdfStore', {
       // 將 PDF 畫面設定為背景
       // 判斷是否從歷史紀錄回來此頁
       // 暫時解決this.pdfImage存入localStorage解析後會改變的問題
-      if (this.fromHistory) {
+      if (this.fromHistoryData) {
         await canvas.setBackgroundImage(this.pdfImage.src, canvas.renderAll.bind(canvas))
       } else {
         await canvas.setBackgroundImage(this.pdfImage, canvas.renderAll.bind(canvas))
@@ -218,6 +224,12 @@ export default defineStore('pdfStore', {
     removePDFHistory (item) {
       this.pdfHistory.splice(this.pdfHistory.indexOf(item), 1)
       localStorage.setItem('pdfHistory', JSON.stringify(this.pdfHistory))
+    },
+    fromHistory () {
+      this.totalPage = 1
+      console.log(this.pdfData)
+      this.pdfToImage()
+      this.renderPage()
     }
   },
   getters: {
