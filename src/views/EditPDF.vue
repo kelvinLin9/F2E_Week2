@@ -10,34 +10,34 @@
     <!-- 編輯區 -->
     <div class="edit-pdf d-flex justify-content-center align-items-center bg-white">
       <div class="page d-flex justify-content-center align-items-center">
-        <button class="btn">
+        <button type="button" class="btn">
           <img src="../assets/images/prev.png" alt="上一頁"
             @click="prevPage()">
         </button>
         <div class="text-center">
           {{ pageNum }} / {{ totalPage }}
         </div>
-        <button class="btn">
+        <button type="button" class="btn">
           <img src="../assets/images/next.png" alt="下一頁"
               @click="nextPage()">
         </button>
       </div>
       <div class="scale d-flex justify-content-center align-items-center">
-        <button class="btn">
+        <button type="button" class="btn">
           <img src="../assets/images/zoom-out.png" alt="縮小"
               @click="zoomOut()">
         </button>
         <div class="text-center">
           {{ scaleXY }} %
         </div>
-        <button class="btn">
+        <button type="button" class="btn">
           <img src="../assets/images/zoom-in.png" alt="放大"
               @click="zoomIn()">
         </button>
       </div>
       <div class="other d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center flex-column">
-          <button class="edit-btn"
+          <button type="button" class="edit-btn"
                   @click="toggleSignHistory(), signHistoryView = !signHistoryView"
           >
             <img src="../assets/images/簽名1.png" alt="簽名1"
@@ -52,7 +52,7 @@
           >簽名</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
-          <button class="edit-btn"
+          <button type="button" class="edit-btn"
                   @click="btnName = 'check'"
           >
             <img src="../assets/images/勾選1.png" alt="勾選1"
@@ -67,7 +67,7 @@
           >勾選</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
-          <button class="edit-btn"
+          <button type="button" class="edit-btn"
                   @click="btnName = 'date', addDate()"
           >
             <img src="../assets/images/日期1.png" alt="日期1"
@@ -82,7 +82,7 @@
           >插入日期</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column">
-          <button class="edit-btn"
+          <button type="button" class="edit-btn"
                   @click="addText()"
           >
             <img src="../assets/images/文字1.png" alt="文字1"

@@ -2,14 +2,14 @@
   <div class="position-relative d-flex flex-column justify-content-center align-items-center Noto-Sans-TC">
     <!-- 選擇簽名方式 -->
     <div class="mt-5">
-      <button class="btn py-2 my-3"
+      <button type="button" class="btn py-2 my-3"
               @click="signMethod = 'handwriting'"
               :class="{'btn-handwriting' :signMethod === 'handwriting',
                         'btn-import' :signMethod === 'uploadImage',}"
       >
         手寫簽名
       </button>
-      <button class="btn py-2 my-3"
+      <button type="button" class="btn py-2 my-3"
               @click="signMethod = 'uploadImage'"
               :class="{'btn-handwriting' :signMethod === 'uploadImage',
                       'btn-import' :signMethod === 'handwriting',}"
@@ -53,14 +53,14 @@
       <img :src="imagePreview" alt="預覽圖" class="preview" v-if="imagePreview">
     </div>
     <div class="btn-group">
-      <button class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">
+      <button type="button" class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">
         清除
       </button>
-      <button class="save btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
+      <button type="button" class="save btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
               @click="saveImage()">
         儲存
       </button>
-      <button class="goto-editPDF btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
+      <button type="button" class="goto-editPDF btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
               @click="(gotoEditPDF(), signHistoryView = false)">
         下一步
     </button>

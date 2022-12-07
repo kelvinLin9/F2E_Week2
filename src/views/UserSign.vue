@@ -9,7 +9,7 @@
     <RouterLink to="/" class="logo">
       <img src="../assets/images/logo.png" alt="logo">
     </RouterLink>
-    <button class="btn btn-primary text-white sign-history-btn"
+    <button type="button" class="btn btn-primary text-white sign-history-btn"
             @click="signHistoryView = !signHistoryView"
             v-if="$route.path == '/UserSign/MakeSign'"
     >
