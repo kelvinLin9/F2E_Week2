@@ -49,11 +49,9 @@
 <script>
 import { mapActions } from 'pinia'
 import pdfStore from '@/stores/pdfStore'
-import signStore from '@/stores/signStore'
 export default {
   methods: {
-    ...mapActions(pdfStore, ['uploadPDF']),
-    ...mapActions(signStore, ['getSign'])
+    ...mapActions(pdfStore, ['uploadPDF'])
   }
 }
 </script>
