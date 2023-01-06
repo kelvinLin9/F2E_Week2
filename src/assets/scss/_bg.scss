@@ -11,6 +11,9 @@
     position: absolute;
     bottom:0;
     left: 0;
+    @media (max-width: 576px) { 
+      display: none;
+    }
   }
   .bg-home2 {
     background-image: url(~assets/images/home-2.png);
@@ -19,6 +22,9 @@
     position: absolute;
     top: 0;
     right: 0;
+    @media (max-width: 576px) { 
+      display: none;
+    }
   }
 .bg-people1 {
   background-image: url(~assets/images/people-1.png);
@@ -29,6 +35,15 @@
   right: 42.89%;
   top: 52.92%;
   bottom: 9.86%;
+  @media (max-width: 576px) { 
+    background-size:cover;
+    width: 142px;
+    height: 202px;
+    left: 2.4%;
+    right: 59.73%;
+    top: 61.77%;
+    bottom: 7.95%;
+  }
 }
 .bg-people2 {
   background-image: url(~assets/images/people-2.png);
@@ -39,6 +54,15 @@
   right: 28.59%;
   top: 61.81%;
   bottom: 7.92%;
+  @media (max-width: 576px) { 
+    background-size:cover;
+    width: 97px;
+    height: 164px;
+    left: 35.47%;
+    right: 38.67%;
+    top: 68.52%;
+    bottom: 6.9%;
+  }
 }
 .bg-people3 {
   background-image: url(~assets/images/people-3.png);
@@ -49,6 +73,15 @@
   right: 15.7%;
   top: 55%;
   bottom: 10.56%;
+  @media (max-width: 576px) { 
+    background-size:cover;
+    width: 108px;
+    height: 188px;
+    left: 66.13%;
+    right: 5.07%;
+    top: 62.82%;
+    bottom: 9%;
+  }
 }
 .bg-people4 {
   background-image: url(~assets/images/people-4.png);
@@ -59,6 +92,9 @@
   right: 13.12%;
   top: 33.19%;
   bottom: 28.19%;
+  @media (max-width: 576px) { 
+    display: none;
+  }
 }
 .bg-potted-plant {
   background-image: url(~assets/images/pottedplant.png);
@@ -69,6 +105,15 @@
   right: 22.5%;
   top: 68.47%;
   bottom: 7.92%;
+  @media (max-width: 576px) { 
+    background-size:cover;
+    width: 76px;
+    height: 127px;
+    left: 57.07%;
+    right: 22.67%;
+    top: 74.06%;
+    bottom: 6.9%;
+  }
 }
 .bg-seed {
   background-image: url(~assets/images/seed.png);
@@ -79,6 +124,15 @@
   right: 23.36%;
   top: 87.78%;
   bottom: 7.08%;
+  @media (max-width: 576px) { 
+    background-size:cover;
+    width: 21px;
+    height: 27px;
+    left: 69.33%;
+    right: 25.07%;
+    top: 89.81%;
+    bottom: 6.15%;
+  }
 }
 .bg-grassland-1 {
   background-image: url(~assets/images/grassland-1.png);
@@ -87,6 +141,9 @@
   position: absolute;
   bottom:158px;
   left: 0;
+  @media (max-width: 576px) { 
+    display: none;
+  }
 }
 .bg-grassland-2 {
   background-image: url(~assets/images/grassland-2.png);
@@ -97,6 +154,9 @@
   right: 9.53%;
   top: 82.08%;
   bottom: 2.92%;
+  @media (max-width: 576px) { 
+    display: none;
+  }
 }
 .bg-user-history {
   background: #F0F0F0;

@@ -19,6 +19,9 @@
       <div class="bg-home1"></div>
       <div class="bg-home2"></div>
     </div>
+    <div class="text-center Noto-Serif-TC pb-3 fs-12 design">
+    小綠簽 © Code: <a href="https://github.com/kelvinLin9" class="text-primary text-decoration-none">Kelvin Lin</a>   /  Design: <a href="https://www.behance.net/KT_Designer" class="text-primary text-decoration-none">KT</a>
+  </div>
   </div>
 </template>
 
@@ -61,9 +64,26 @@ export default {
   border: 2px solid #1C8B6A;
   border-radius: 16px;
   text-decoration: none;
+  @media (max-width: 576px) {
+    right: 30px;
+  }
 }
 .home {
   width: 1280px;
   height: 720px;
+  @media (max-width: 576px) {
+    width: 375px;
+    background: #F0F0F0;
+  }
+}
+.design {
+  width: 300px;
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  @media (max-width: 576px) {
+      left:50%;
+      transform: translate(-50%);
+  }
 }
 </style>
