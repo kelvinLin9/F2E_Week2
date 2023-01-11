@@ -31,14 +31,14 @@
           :class="{'red-active' : color === 'red' }"
           @click="color = 'red', getSign()"></div>
     </div>
+    <!-- 手寫簽名區 -->
     <div class="sign-here"
         v-show="this.signMethod === 'handwriting'">
       <canvas
         id="canvasImage"
-        width="590"
-        height="224"
       ></canvas>
     </div>
+    <!-- 匯入簽名檔 -->
     <div class="upload-img-here"
         v-show="this.signMethod === 'uploadImage'">
       <label for="upload" class="cursor-pointer upload-file-label" accept="image/png, image/jpeg">
@@ -52,7 +52,7 @@
       />
       <img :src="imagePreview" alt="預覽圖" class="preview" v-if="imagePreview">
     </div>
-    <div class="btn-group">
+    <div class="container btn-group test">
       <button type="button" class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">
         清除
       </button>
@@ -127,6 +127,12 @@ export default {
   border-radius: 26px;
   position: absolute;
   top:250px;
+  width: 590px;
+  height: 224px;
+  @media (max-width: 576px) {
+    width: 330px;
+    height: 224px;
+  }
 }
 .upload-img-here{
   width: 590px;
@@ -160,6 +166,10 @@ export default {
   width: 590px;
   height: 224px;
   opacity: 0;
+  @media (max-width: 576px) {
+    width: 330px;
+    height: 224px;
+  }
 }
 .preview {
   position: absolute;

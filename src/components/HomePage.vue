@@ -36,7 +36,7 @@
     </div>
   </div>
   <!-- 手機版 -->
-  <div class="Noto-Sans-TC mb-5">
+  <div class="Noto-Sans-TC mb-5 d-block d-sm-none">
     <div class="input-pdf d-flex flex-column justify-content-center align-items-center">
       <img src="../assets/images/pdf-input.png" alt="">
       <div class="bg-gradient text-white rounded-3 position-relative">

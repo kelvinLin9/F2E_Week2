@@ -5,7 +5,7 @@
       <p class="loading-text1 fs-23">簽名優化中...</p>
     </section>
   </div>
-  <div class="user-sign position-relative" v-else>
+  <div class="user-sign position-relative test" v-else>
     <RouterLink to="/" class="logo">
       <img src="../assets/images/logo.png" alt="logo">
     </RouterLink>
@@ -52,6 +52,9 @@ export default {
   background-color: #f0f0f0;
   width: 1280px;
   height: 720px;
+  @media (max-width: 576px) {
+    width: 375px;
+  }
 }
 .logo {
   position: absolute;
