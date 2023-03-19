@@ -153,14 +153,6 @@ export default {
       }).catch(() => {
         this.btnName = ''
       })
-      // 右鍵刪除元素 先留著 等this.canvas問題解決
-      // this.canvas.on('mouse:down', canvasOnMouseDown)
-      // function canvasOnMouseDown (opt) {
-      //   if (opt.button === 3 && opt.target) {
-      //     console.log(opt.target)
-      //     this.canvas.remove(opt.target)
-      //   }
-      // }
     },
     toggleSignHistory () {
       if (this.btnName === 'sign') {

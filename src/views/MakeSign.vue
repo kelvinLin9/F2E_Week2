@@ -52,18 +52,26 @@
       />
       <img :src="imagePreview" alt="預覽圖" class="preview" v-if="imagePreview">
     </div>
-    <div class="container btn-group test">
-      <button type="button" class="clear btn btn-outline-primary px-5 mx-5 py-2 my-3 rounded-3 bg-white">
-        清除
-      </button>
-      <button type="button" class="save btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
-              @click="saveImage()">
-        儲存
-      </button>
-      <button type="button" class="goto-editPDF btn btn-primary px-5 mx-5 py-2 my-3 rounded-3 text-white"
-              @click="(gotoEditPDF(), signHistoryView = false)">
-        下一步
-    </button>
+    <div class="container">
+      <div class="row btn-group">
+        <div class="col-6 col-sm-4 d-flex justify-content-center align-items-center">
+          <button type="button" class="clear btn btn-outline-primary px-5 py-2 rounded-3 bg-white">
+            清除
+          </button>
+        </div>
+        <div class="col-6 col-sm-4 d-flex justify-content-center align-items-center">
+          <button type="button" class="save btn btn-primary px-5 py-2 rounded-3 text-white"
+                  @click="saveImage()">
+            儲存
+          </button>
+        </div>
+        <div class="col col-sm-4 d-flex justify-content-center align-items-center">
+          <button type="button" class="goto-editPDF btn btn-primary px-5 py-2 my-3 rounded-3 text-white"
+                  @click="(gotoEditPDF(), signHistoryView = false)">
+            下一步
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -144,8 +152,15 @@ export default {
   top:250px;
 }
 .btn-group {
+  width: 100%;
   position: absolute;
   top:530px;
+  left: 50%;
+  transform: translate(-48%);
+    @media (max-width: 576px) {
+    // width: 30px;
+    // height: 224px;
+  }
 }
 .btn-handwriting {
   color: white;
